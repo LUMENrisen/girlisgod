@@ -1,0 +1,81 @@
+{{ partial "header.html" . }}
+
+<article class="max-w-none px-4 md:px-6">
+  <header class="mb-8">
+    {{ if .Params.Cover }}
+    <img src="{{ .Params.Cover }}" class="w-full h-48 md:h-64 object-cover rounded-lg mb-6" alt="{{ .Title }}">
+    {{ end }}
+
+    <h1 class="text-2xl md:text-3xl font-semibold text-stone-900 dark:text-stone-100 mb-4 leading-tight">
+      {{ .Title }}
+    </h1>
+
+    <div class="flex flex-wrap items-center gap-3 text-sm text-stone-500 dark:text-stone-400 mb-4">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">
+        {{ .Date.Format "2006年1月2日" }}
+      </time>
+
+    
+
+      {{ $raw := .Plain }}
+      {{ $chineseCount := len (findRE "[\u4e00-\u9fa5]" $raw) }}
+      {{ $wordCount := add $chineseCount (len (findRE "[a-zA-Z0-9]+" $raw)) }}
+      {{ $readingTime := div $wordCount 300 }}
+      {{ if lt $readingTime 1 }}{{ $readingTime = 1 }}{{ end }}
+      <span>{{ $wordCount }}字</span>
+      <span>阅读约 {{ $readingTime }} 分钟</span>
+
+      {{ $author := .Params.author | default .Site.Params.author | default "LUMEN" }}
+      
+      <span>作者：{{ $author }}</span>
+
+    </div>
+
+    
+  </header>
+
+  
+  {{ if .Params.toc | default true }}
+  {{ partial "toc.html" . }}
+  {{ end }}
+
+  <div class="prose prose-stone dark:prose-invert max-w-none
+    prose-headings:font-semibold
+    prose-a:text-sage-600 dark:prose-a:text-sage-400 prose-a:no-underline hover:prose-a:underline
+    prose-code:text-sage-700 dark:prose-code:text-sage-400 prose-code:bg-stone-100 dark:prose-code:bg-stone-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+    prose-pre:bg-stone-900 dark:prose-pre:bg-stone-950 prose-pre:rounded-lg
+    prose-blockquote:border-l-2 prose-blockquote:border-sage-400 prose-blockquote:bg-stone-50 dark:prose-blockquote:bg-stone-900 prose-blockquote:not-italic
+    prose-img:rounded-lg
+    mb-10">
+    {{ partial "wikilinks.html" . }}
+  </div>
+
+  {{ partial "series-nav.html" . }}
+
+
+
+  
+  {{ if .Params.tags }}
+    <div class="flex flex-wrap gap-1.5">
+      {{ range .Params.tags }}
+      <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag-pill-link">
+        {{ . }}
+      </a>
+      {{ end }}
+    </div>
+    {{ end }}
+
+
+</article>
+
+
+
+
+<!-- 阅读计数（强制靠右） -->
+<div style="width: 100%; text-align: right; margin-top: 2rem; padding: 0 1.5rem;">
+  <span id="busuanzi_container_page_pv" style="display: inline-block; background: #1a1a1a; color: #a3a3a3; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">
+    <span id="busuanzi_value_page_pv"></span> 人曾在此小坐
+  </span>
+</div>
+
+{{ partial "footer.html" . }}

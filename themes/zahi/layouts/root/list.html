@@ -1,0 +1,43 @@
+{{ partial "header.html" . }}
+
+{{ partial "Roots-background.html" . }}
+
+<div class="px-4 md:px-6 max-w-3xl mx-auto">
+  {{ with .Content }}
+  <div class="prose prose-stone dark:prose-invert max-w-none mb-8">
+    {{ . }}
+  </div>
+  {{ end }}
+
+  <!-- 列表式成员展示 -->
+  <div class="space-y-4 mb-12">
+    {{ range .Pages.ByWeight }}
+    <a href="{{ .RelPermalink }}" class="flex items-start gap-4 p-4 border border-stone-200 dark:border-stone-800 rounded-lg hover:border-sage-500 transition-colors bg-stone-50/50 dark:bg-stone-900/50 backdrop-blur-sm no-underline">
+      
+      <!-- 左侧：头像 + 姓名 -->
+      <div class="flex-shrink-0 w-24 text-center">
+        {{ with .Params.avatar }}
+        <img src="{{ . }}" alt="{{ $.Title }}" class="w-16 h-16 mx-auto rounded-full object-cover border border-sage-500/50 mb-2">
+        {{ end }}
+        <div>
+          <h2 class="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-sage-600 dark:group-hover:text-sage-400 transition-colors">
+            {{ .Title }}
+          </h2>
+          {{ with .Params.role }}
+          <p class="text-xs text-sage-600 dark:text-sage-400 mt-0.5">{{ . }}</p>
+          {{ end }}
+        </div>
+      </div>
+
+      <!-- 右侧：截断后的简介（60字符） -->
+      <div class="flex-1">
+        <p class="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+          {{ .Description | default .Summary | plainify | truncate 80 }}
+        </p>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</div>
+
+{{ partial "footer.html" . }}

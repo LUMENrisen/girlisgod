@@ -1,0 +1,231 @@
+{
+  "main": {
+    "id": "99c16f1cb0f9d28d",
+    "type": "split",
+    "children": [
+      {
+        "id": "ae192d677ffe8de9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "47e365f4f01e648b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "content/posts/why-digital-mansion.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "why-digital-mansion"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a0212dcec09f844a",
+    "type": "split",
+    "children": [
+      {
+        "id": "146b5f7e1479022a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "75cfbe306899bb09",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "1e1327f7799485c8",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "cdb7081705394f82",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "fc61a3b6d90e46f0",
+    "type": "split",
+    "children": [
+      {
+        "id": "53b82d7472887bed",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8c65c418985fc8d4",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "content/rooms/roots.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "roots 的反向链接列表"
+            }
+          },
+          {
+            "id": "f84da3d70bcdedd1",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "content/posts/第三篇文章.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "第三篇文章 的出链列表"
+            }
+          },
+          {
+            "id": "286c4b08eb3e7de8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "93fedcd9aa1149d9",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "56d24f1fe06cf569",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "content/posts/第三篇文章.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "第三篇文章 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "47e365f4f01e648b",
+  "lastOpenFiles": [
+    "content/posts/why-existence-income.md",
+    "content/posts/why-digital-mansion.md",
+    "content/posts/what-radiance-will-say.md",
+    "content/rooms/roots.md",
+    "content/rooms/roads.md",
+    "content/rooms/rivers.md",
+    "content/rooms/risen.md",
+    "content/rooms/rhythm.md",
+    "content/rooms/reality.md",
+    "content/rooms/radiance.md",
+    "content/rooms/_index.md",
+    "public/rooms/reality/index.html",
+    "public/rooms/reality",
+    "public/rooms/roots/index.html",
+    "public/rooms/roots",
+    "public/rooms/rivers/index.html",
+    "public/rooms/rivers",
+    "public/rooms/roads/index.html",
+    "public/rooms/roads",
+    "public/rooms/risen/index.html",
+    "public/rooms/risen",
+    "content/root/lu-guo.md",
+    "content/root/lu-biao.md",
+    "content/root/lu-chi.md",
+    "content/root/lu-zhai.md",
+    "content/root/lu-yanchen.md",
+    "content/root/lu-ming.md",
+    "content/root/lu-shang.md",
+    "content/projects/changfeng.md",
+    "content/projects/xurang.md",
+    "content/projects/wenxin.md",
+    "content/projects/seal-craft.md",
+    "content/projects/qimingzhu.md",
+    "content/projects/maomao-republic.md",
+    "content/series/digital-recipe/信息食谱 10.md",
+    "content/series/digital-recipe/信息食谱 9.md",
+    "public/images/profile.jpg",
+    "public/images/1.jpg",
+    "static/images/profile.jpg",
+    "public/images/2.jpg",
+    "static/images/2.jpg",
+    "static/images/1.jpg"
+  ]
+}

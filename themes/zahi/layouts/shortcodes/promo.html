@@ -1,0 +1,20 @@
+{{/*
+  promo 短代码 - 文章末尾付费引导
+  用法：
+  {{< promo url="https://xiaobot.net/p/existence-income" text="完整版《存在收入》系列" button="小报童订阅" >}}
+*/}}
+
+<div class="paid-promo my-8 p-6 bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-lg">
+  <p class="text-stone-700 dark:text-stone-300 mb-4">
+    📘 {{ .Get "text" | default "想要完整版手册？" }}
+  </p>
+  <div class="flex flex-wrap gap-3">
+    <a href="{{ .Get "url" }}" target="_blank" rel="noopener" 
+       class="inline-flex items-center px-5 py-2.5 bg-sage-600 hover:bg-sage-700 text-white rounded-md transition-colors">
+      {{ .Get "button" | default "立即获取" }}
+    </a>
+    <a href="/services/" class="inline-flex items-center px-5 py-2.5 border border-sage-600 text-sage-600 dark:text-sage-400 hover:bg-sage-50 dark:hover:bg-sage-900 rounded-md transition-colors">
+      预约咨询 →
+    </a>
+  </div>
+</div>

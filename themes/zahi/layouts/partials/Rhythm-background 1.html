@@ -1,0 +1,85 @@
+<!-- 风背景 - 流动粒子版 -->
+<div id="wind-canvas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
+
+<script>
+let particles = [];
+const numParticles = 80;  // 粒子数量
+
+function setup() {
+  const canvas = createCanvas(windowWidth, windowHeight);
+  canvas.parent('wind-canvas-container');
+  colorMode(HSB, 360, 100, 100, 255);
+  
+  // 初始化粒子
+  for (let i = 0; i < numParticles; i++) {
+    particles.push({
+      pos: createVector(random(width), random(height)), // 随机起始位置
+      dir: createVector(1, random(-0.3, 0.3)),          // 主方向向右，带一点上下随机
+      drift: random(-0.02, 0.02),                        // 蜿蜒程度
+      speed: random(0.5, 1.5),                           // 速度
+      size: random(0.8, 1.5)                             // 大小
+    });
+  }
+  
+  // 不填充，只用线条
+  noFill();
+  strokeWeight(1);
+}
+
+function draw() {
+  // 极淡的背景，让轨迹停留一会儿
+  background(0, 0, 0, 8);
+  
+  // 金色系
+  const goldHue = 50;
+  
+  // 更新和绘制每个粒子
+  for (let p of particles) {
+    // 让方向缓慢变化，产生蜿蜒感（像风吹的轨迹）
+    p.dir.rotate(p.drift);
+    
+    // 移动粒子
+    p.pos.add(p.dir.copy().mult(p.speed));
+    
+    // 如果粒子超出右边界，重置到左边
+    if (p.pos.x > width + 20) {
+      p.pos.x = -20;
+      p.pos.y = random(height);
+      // 重置方向，保持向右但有随机性
+      p.dir = createVector(1, random(-0.3, 0.3));
+    }
+    
+    // 如果超出上下边界，轻轻拉回
+    if (p.pos.y < -20) p.pos.y = height + 20;
+    if (p.pos.y > height + 20) p.pos.y = -20;
+    
+    // 画粒子轨迹（用一条短线代表风）
+    stroke(goldHue, 70, 80, 20);
+    
+    // 画粒子本身
+    point(p.pos.x, p.pos.y);
+    
+    // 画粒子的尾巴（让它有流动感）
+    const tailLength = 20;
+    const tailX = p.pos.x - p.dir.x * tailLength;
+    const tailY = p.pos.y - p.dir.y * tailLength;
+    line(tailX, tailY, p.pos.x, p.pos.y);
+  }
+  
+  // 画一些额外的流动线条
+  stroke(goldHue, 60, 90, 5);
+  for (let i = 0; i < 5; i++) {
+    const y = (frameCount * 0.5 + i * 100) % height;
+    beginShape();
+    for (let x = -50; x < width + 50; x += 30) {
+      const waveY = y + sin(x * 0.02 + frameCount * 0.05) * 30;
+      vertex(x, waveY);
+    }
+    endShape();
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+</script>

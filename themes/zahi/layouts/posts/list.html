@@ -1,0 +1,67 @@
+{{ partial "header.html" . }}
+
+<!-- 判断是否显示花开背景 -->
+{{ if eq .Params.bg_effect "radiance" }}
+  {{ partial "Radiance-background 1.html" . }}
+{{ end }}
+
+<!-- 这里直接复用默认列表模板的内容，或者自定义 -->
+{{ $pages := .Pages }}
+{{ $paginator := .Paginate $pages }}
+
+<!--
+<div class="mb-8 px-4 md:px-6">
+  <h1 class="text-2xl md:text-3xl font-bold text-stone-900 dark:text-stone-100 mb-3">
+    {{ .Title }}
+  </h1>
+  {{ with .Description }}
+  <p class="text-stone-500 dark:text-stone-400">{{ . }}</p>
+  {{ end }}
+</div>
+-->
+
+<!-- 文章列表 -->
+<div class="space-y-2 mb-10 px-4 md:px-6">
+  {{ range $paginator.Pages }}
+  <article class="group relative">
+    <a href="{{ .RelPermalink }}" class="block p-4 -mx-4 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800/50 transition-colors">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex-1 min-w-0">
+          <h2 class="font-medium text-stone-900 dark:text-stone-100 group-hover:text-sage-600 dark:group-hover:text-sage-400 transition-colors mb-1">
+            {{ .Title }}
+          </h2>
+          <p class="text-sm text-stone-500 dark:text-stone-400 line-clamp-2">
+            {{ .Description | default .Summary | plainify | truncate 120 }}
+          </p>
+        </div>
+        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-sm text-stone-400 dark:text-stone-500 whitespace-nowrap">
+          {{ .Date.Format "2006-01-02" }}
+        </time>
+      </div>
+      <!-- 标签和系列 -->
+      <div class="flex flex-wrap items-center gap-2 mt-2">
+        {{ if .Params.series }}
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-sage-500/10 text-sage-600 dark:text-sage-400">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+          {{ .Params.series }}
+        </span>
+        {{ end }}
+        {{- if .Params.tags }}
+          <div class="tags">
+            {{- range first 3 .Params.tags }}
+              <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag-pill">{{ . }}</a>
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
+    </a>
+  </article>
+  {{ end }}
+</div>
+
+<!-- 分页 -->
+{{ template "_internal/pagination.html" . }}
+
+{{ partial "footer.html" . }}

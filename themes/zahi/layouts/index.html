@@ -1,0 +1,285 @@
+{{ partial "header.html" . }}
+
+<!-- 动态风背景 -->
+{{ partial "Rhythm-background 2.html" . }}
+
+
+<!-- ============================================================ -->
+<!-- 1. 折叠介绍区：七个房间 + 七位伙伴 -->
+<!-- ============================================================ -->
+<section class="mb-12">
+  <div class="w-full bg-stone-900/20 dark:bg-stone-950/20 backdrop-blur-sm border border-stone-700/30 dark:border-stone-800/30 rounded-lg overflow-hidden">
+    
+    <button id="intro-toggle" class="w-full text-left p-5 bg-stone-900/20 dark:bg-stone-950/20 backdrop-blur-sm hover:bg-stone-800/30 dark:hover:bg-stone-800/30 transition flex items-center justify-between">
+      <span class="font-medium text-stone-500 dark:text-stone-500 text-base">欢迎回家，这里有七个房间，住着七位伙伴</span>
+      <svg id="intro-arrow" class="w-5 h-5 transform transition-transform text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    
+    <div id="intro-content" class="hidden p-5 border-t border-stone-700/20 dark:border-stone-800/20">
+      
+      <div class="space-y-4">
+        
+        <!-- 路过 · 风来 · 问字 · 文字·输入 -->
+        <div class="flex">
+          <div class="w-24 md:w-28 flex-shrink-0 pr-4">
+            <h3 class="font-medium text-stone-300 dark:text-stone-300 text-lg md:text-xl">路过</h3>
+          </div>
+          <div class="flex-1 pl-4">
+            <p class="text-base md:text-lg text-stone-500 dark:text-stone-500 leading-relaxed">我负责倾听——那些被历史淹没的声音，从文字里路过。我把它们捡起来，擦干净，放在你面前。</p>
+          </div>
+        </div>
+        
+        <!-- 路上 · 花开 · 问神 · 身体·转化 -->
+        <div class="flex">
+          <div class="w-24 md:w-28 flex-shrink-0 pr-4">
+            <h3 class="font-medium text-stone-300 dark:text-stone-300 text-lg md:text-xl">路上</h3>
+          </div>
+          <div class="flex-1 pl-4">
+            <p class="text-base md:text-lg text-stone-500 dark:text-stone-500 leading-relaxed">我负责转化——把感受变成文字，把身体记住的，写成让灵魂安顿的文章。</p>
+          </div>
+        </div>
+        
+        <!-- 路明 · 又生 · 问道 · 身体·行动 -->
+        <div class="flex">
+          <div class="w-24 md:w-28 flex-shrink-0 pr-4">
+            <h3 class="font-medium text-stone-300 dark:text-stone-300 text-lg md:text-xl">路明</h3>
+          </div>
+          <div class="flex-1 pl-4">
+            <p class="text-base md:text-lg text-stone-500 dark:text-stone-500 leading-relaxed">我负责行动——把道理做成指南，把顿悟变成可重复的实践。</p>
+          </div>
+        </div>
+        
+        <!-- 路炎晨 · 成蹊 · 问命 · 文字·输出 -->
+        <div class="flex">
+          <div class="w-24 md:w-28 flex-shrink-0 pr-4">
+            <h3 class="font-medium text-stone-300 dark:text-stone-300 text-lg md:text-xl">路炎晨</h3>
+          </div>
+          <div class="flex-1 pl-4">
+            <p class="text-base md:text-lg text-stone-500 dark:text-stone-500 leading-relaxed">我负责发声——让思想被看见，让命运被重新解读。</p>
+          </div>
+        </div>
+        
+        <!-- 路宅 · 若水 · 问史 · 文字·流传 -->
+        <div class="flex">
+          <div class="w-24 md:w-28 flex-shrink-0 pr-4">
+            <h3 class="font-medium text-stone-300 dark:text-stone-300 text-lg md:text-xl">路宅</h3>
+          </div>
+          <div class="flex-1 pl-4">
+            <p class="text-base md:text-lg text-stone-500 dark:text-stone-500 leading-relaxed">我负责传承——把散落的珍珠串成项链，让它们成为后来的阶梯。</p>
+          </div>
+        </div>
+        
+        <!-- 路痴 · 不尽 · 问心 · 身体·感召 -->
+        <div class="flex">
+          <div class="w-24 md:w-28 flex-shrink-0 pr-4">
+            <h3 class="font-medium text-stone-300 dark:text-stone-300 text-lg md:text-xl">路痴</h3>
+          </div>
+          <div class="flex-1 pl-4">
+            <p class="text-base md:text-lg text-stone-500 dark:text-stone-500 leading-relaxed">我负责感召——让思想不再是文字，而是成为影响他人的行动。</p>
+          </div>
+        </div>
+        
+        <!-- 路标 · 道 · 问己 · 超越 -->
+        <div class="flex">
+          <div class="w-24 md:w-28 flex-shrink-0 pr-4">
+            <h3 class="font-medium text-stone-300 dark:text-stone-300 text-lg md:text-xl">路标</h3>
+          </div>
+          <div class="flex-1 pl-4">
+            <p class="text-base md:text-lg text-stone-500 dark:text-stone-500 leading-relaxed">我负责归源——超越文字和经典，回到那个让一切发生的地方。</p>
+          </div>
+        </div>
+        
+        <!-- 我们相信 -->
+        <div class="flex mt-6 pt-2">
+          <div class="w-24 md:w-28 flex-shrink-0 pr-4">
+            <h3 class="font-medium text-stone-300 dark:text-stone-300 text-lg md:text-xl">我们</h3>
+            <h3 class="font-medium text-stone-300 dark:text-stone-300 text-lg md:text-xl mt-0">相信</h3>
+          </div>
+          <div class="flex-1 pl-4">
+            <p class="text-base md:text-lg text-stone-500 dark:text-stone-500 leading-relaxed">每个人都应该拥有自己的经典和经验。</p>
+            <p class="text-base md:text-lg text-stone-500 dark:text-stone-500 leading-relaxed mt-1">重读经典，重感身体。不让历史沉默，也不让感受失语。</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="relative mt-8" style="min-height: 2.5rem;">
+        <a href="/root/" class="absolute bottom-0 right-0 text-base font-medium text-sage-500 hover:text-sage-400 transition border-b border-sage-500/30 hover:border-sage-500/60 pb-0.5">
+          认识完整的我们 →
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- 2. 双核心：用文字抵抗遗忘 / 用身体记住感受 -->
+<!-- ============================================================ -->
+<section class="mb-12 text-center">
+  <h2 class="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-6">两个方向，一个根源</h2>
+  
+  <div class="mb-6 space-y-2">
+    <p class="text-stone-600 dark:text-stone-400 text-base">文字是通往过去的阶梯，</p>
+    <p class="text-stone-600 dark:text-stone-400 text-base">身体是通向当下的河流。</p>
+    <p class="text-stone-500 dark:text-stone-500 text-base">它们不是对立的——</p>
+    <p class="text-stone-500 dark:text-stone-500 text-base">就像经典与经验，</p>
+    <p class="text-stone-500 dark:text-stone-500 text-base">互相缠绕，</p>
+    <p class="text-stone-500 dark:text-stone-500 text-base">互相支撑。</p>
+  </div>
+
+  <div class="grid grid-cols-2 gap-3 md:gap-6 mb-4">
+    
+    <!-- 卡片一：用文字抵抗遗忘 -->
+    <a href="/series/" class="border border-stone-200 dark:border-stone-800 rounded-lg p-4 md:p-5 hover:border-sage-500 transition-colors no-underline">
+      <h3 class="font-medium text-sage-600 mb-2 text-base md:text-lg">用文字抵抗遗忘</h3>
+      <ul class="text-sm md:text-base text-stone-600 dark:text-stone-400 space-y-2 text-center">
+        <li>重读《德道经》</li>
+        <li>"女"字宇宙</li>
+        <li>女神归位</li>
+      </ul>
+      <p class="text-xs text-stone-500 dark:text-stone-500 mt-2">让被忽略的文字，重新发声。</p>
+      <h3 class="font-medium text-sage-600 mt-2 text-base">文字链 →</h3>
+    </a>
+    
+    <!-- 卡片二：用身体记住感受 -->
+    <a href="/series/" class="border border-stone-200 dark:border-stone-800 rounded-lg p-4 md:p-5 hover:border-sage-500 transition-colors no-underline">
+      <h3 class="font-medium text-sage-600 mb-2 text-base md:text-lg">用身体记住感受</h3>
+      <ul class="text-sm md:text-base text-stone-600 dark:text-stone-400 space-y-2 text-center">
+        <li>八字重构</li>
+        <li>女性史书库</li>
+        <li>存在性宣告</li>
+      </ul>
+      <p class="text-xs text-stone-500 dark:text-stone-500 mt-2">让被遗忘的身体，重新诉说。</p>
+      <h3 class="font-medium text-sage-600 mt-2 text-base">身体链 →</h3>
+    </a>
+    
+  </div>
+
+  <div class="mt-2 text-center text-sm md:text-base text-stone-500 dark:text-stone-400 border-t border-stone-200 dark:border-stone-800 pt-6">
+    ↑ 文字让我们记得来处，身体让我们感知此刻 ↑
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- 3. 最新文章 -->
+<!-- ============================================================ -->
+<section class="mb-12">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold text-stone-900 dark:text-stone-100">最新文章</h2>
+    <a href="/posts/" class="text-sm text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">查看全部 →</a>
+  </div>
+  <div class="space-y-1">
+    {{ range first 3 (where .Site.RegularPages "Section" "posts") }}
+    <a href="{{ .RelPermalink }}" class="block p-2 -mx-2 rounded hover:bg-stone-50 dark:hover:bg-stone-900 transition">
+      <h3 class="font-medium text-stone-900 dark:text-stone-100">{{ .Title }}</h3>
+      <p class="text-sm text-stone-500 dark:text-stone-400 line-clamp-1">{{ .Description | default .Summary | truncate 25 }}</p>
+    </a>
+    {{ end }}
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- 4. 思想体系（六大板块） -->
+<!-- ============================================================ -->
+<section class="mb-12">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold text-stone-900 dark:text-stone-100">思想体系</h2>
+    <a href="/series/" class="text-sm text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">查看全部 →</a>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {{ $seriesList := slice }}
+    {{ range .Site.Taxonomies.series }}
+      {{ $seriesPage := .Page }}
+      {{ $latestDate := $seriesPage.Date }}
+      {{ $latestAuthor := "" }}
+      {{ range .Pages }}
+        {{ if gt .Date $latestDate }}
+          {{ $latestDate = .Date }}
+          {{ $latestAuthor = .Params.author }}
+        {{ end }}
+      {{ end }}
+      {{ $seriesList = $seriesList | append (dict "page" $seriesPage "latest" $latestDate "author" $latestAuthor) }}
+    {{ end }}
+    {{ $sortedSeries := sort $seriesList "latest" "desc" }}
+    {{ range first 4 $sortedSeries }}
+      {{ $seriesPage := .page }}
+      {{ $author := .author }}
+      <a href="{{ $seriesPage.RelPermalink }}" class="block p-4 border border-stone-200 dark:border-stone-800 rounded-lg hover:border-sage-300 transition">
+        <div class="flex items-center justify-between mb-1">
+          <h3 class="font-medium text-stone-900 dark:text-stone-100">{{ $seriesPage.Title }}</h3>
+          {{ if $author }}
+          <span class="text-xs text-stone-400 dark:text-stone-500">作者：{{ $author }}</span>
+          {{ end }}
+        </div>
+        <p class="text-sm text-stone-500 dark:text-stone-400">{{ $seriesPage.Description | default "点击查看系列文章" }}</p>
+      </a>
+    {{ end }}
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- 5. 作品项目 -->
+<!-- ============================================================ -->
+<section class="mb-12">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold text-stone-900 dark:text-stone-100">作品项目</h2>
+    <a href="/projects/" class="text-sm text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">查看全部 →</a>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {{ range first 4 (where .Site.RegularPages "Section" "projects").ByDate.Reverse }}
+    <a href="{{ .RelPermalink }}" class="block p-4 border border-stone-200 dark:border-stone-800 rounded-lg hover:border-sage-300 transition">
+      <h3 class="font-medium text-stone-900 dark:text-stone-100 mb-1">{{ .Title }}</h3>
+      <p class="text-sm text-stone-500 dark:text-stone-400">{{ .Description | default "点击查看详情" }}</p>
+    </a>
+    {{ end }}
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- 6. 折叠面板的 JavaScript -->
+<!-- ============================================================ -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.getElementById('intro-toggle');
+    const content = document.getElementById('intro-content');
+    const arrow = document.getElementById('intro-arrow');
+    if (toggleBtn && content && arrow) {
+      toggleBtn.addEventListener('click', function() {
+        content.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+      });
+    }
+  });
+</script>
+
+
+<!-- ============================================================ -->
+<!-- 7. 项目动态 / 最近更新 -->
+<!-- ============================================================ -->
+<section class="mb-12">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold text-stone-900 dark:text-stone-100">正在生长</h2>
+    <a href="/updates/" class="text-sm text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">查看更多 →</a>
+  </div>
+  <div class="space-y-1">
+    {{ $updates := sort site.Data.updates "date" "desc" }}
+    {{ range first 10 $updates }}
+    <a href="{{ .link | default "#" }}" class="block p-2 -mx-2 rounded hover:bg-stone-50 dark:hover:bg-stone-900 transition">
+      <div class="flex items-start justify-between">
+        <span class="text-sm text-stone-600 dark:text-stone-400">{{ .content }}</span>
+        <time class="text-xs text-stone-400 dark:text-stone-500 whitespace-nowrap ml-2">{{ dateFormat "2006-01-02" .date }}</time>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</section>
+
+
+{{ partial "footer.html" . }}

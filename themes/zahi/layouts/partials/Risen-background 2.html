@@ -1,0 +1,232 @@
+<div id="citymap-canvas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+<script>
+class IsoCube {
+  constructor(x, y, s, w, h, clr, len, typ = 0) {
+    this.pos = this.getPos(x, y, s)
+    this.x = x;
+    this.y = y;
+    this.s = s;
+    this.w = w;
+    this.h = h;
+    this.clr = clr;
+    this.len = len;
+    this.typ = typ;
+  }
+
+  getPos(xi, yi, sze) {
+    const x = (xi - yi) * sze * Math.sqrt(3) * 0.5;
+    const y = sze / 2 +  xi * sze * 0.5 +  yi * sze * 0.5;
+    return {x, y};
+  }
+
+  show(f = 1) {
+    push();
+    rectMode(CENTER);
+    colorMode(HSB, 360, 100, 100, 100); // 明确设置HSB范围
+    
+    translate(this.pos.x, this.pos.y);
+    
+    const l = this.len * f;
+    const pN = this.getPos(0, 0, this.s);
+    const pE = this.getPos(this.w, 0, this.s);
+    const pS = this.getPos(this.w, this.h, this.s);
+    const pW = this.getPos(0, this.h, this.s);
+    
+    let clr = this.clr;
+    let cHue = hue(clr);
+    let cSat = saturation(clr);
+    let cBri = brightness(clr);
+    let alpha = 95; // 固定透明度，避免闪烁
+    
+    // 底面
+    fill(cHue, cSat, cBri, alpha);
+    quad(pN.x, pN.y, pE.x, pE.y, pS.x, pS.y, pW.x, pW.y);
+    
+    if (l > 0) {
+      // 顶面
+      fill(cHue, min(cSat + 25, 100), min(cBri + 10, 100), alpha);
+      quad(pN.x, pN.y - l, pE.x, pE.y - l, pS.x, pS.y - l, pW.x, pW.y - l);
+      // 右侧面
+      fill(cHue, min(cSat + 35, 100), max(cBri - 25, 0), alpha);
+      quad(pE.x, pE.y - l, pE.x, pE.y, pS.x, pS.y, pS.x, pS.y - l);
+      // 左侧面
+      fill(cHue, min(cSat + 15, 100), min(cBri + 25, 100), alpha);
+      quad(pW.x, pW.y - l, pW.x, pW.y, pS.x, pS.y, pS.x, pS.y - l);
+    }
+    pop();
+  }
+}
+
+// ========== 全局变量 ==========
+const NUM = 35;
+let SZE = 20;
+let grid;
+let frame = 0;
+let scaleFactor = 5; // 放大倍数
+
+function setup() {
+  let canvas = createCanvas(windowWidth, windowHeight);
+  canvas.parent('citymap-canvas-container');
+  colorMode(HSB, 360, 100, 100, 100); // 全局颜色模式
+  displayDensity(1);
+  frameRate(30);
+  
+  generateCity();
+}
+
+function draw() {
+  clear(); // 透明背景
+  
+  push();
+  // 先放大，再平移
+  scale(scaleFactor);
+  
+  // 计算网格总高度（近似）
+  let gridHeight = NUM * SZE * 0.8; // 等距投影下的近似高度
+  // 平移使得网格顶部刚好在视口下方露出一点点
+  // 我们希望只显示顶部大约 1/10 的高度，因此将网格向下移动，使顶部进入视口
+  // 视口高度为 height/scaleFactor，我们想让网格的 y 范围 [gridTop, gridBottom] 中顶部部分显示
+  // 设置 translate 的 y 为 -gridHeight * 0.9，这样网格顶部在 y=0 附近，屏幕内显示顶部 10%
+  translate(width / scaleFactor * 1, height / scaleFactor * 0.9 - gridHeight * 0.1);
+  
+  for (let item of grid) {
+    let n = noise(width + item.x * 0.123, height + item.y * 0.321, frame * 0.0025) + 0.25;
+    let f = max(0, pow(n, 2.25));
+    item.show(f);
+  }
+  
+  pop();
+  frame++;
+}
+
+function generateCity() {
+  // 重新计算基础尺寸
+  let SZE_X = floor((width / Math.sqrt(3)) / (NUM + 1));
+  let SZE_Y = floor((height / (NUM + 1)));
+  SZE = min(SZE_X, SZE_Y);
+
+  grid = [];
+  
+  // 纯金色系调色板（HSB）
+  // 色相范围 40-60 为金色，饱和度亮度根据不同用途调整
+  
+  // 建筑颜色（亮金色）
+  const clrBuildings = [
+    color(50, 80, 90),  // 亮金
+    color(45, 85, 85),  // 浓郁金
+    color(55, 70, 95),  // 淡金
+    color(40, 75, 80),  // 古铜金
+    color(48, 80, 88),  // 中金
+    color(52, 90, 82),  // 深金
+  ];
+  
+  const TYP_BASE = 1, TYP_PARK = 3, TYP_WATER = 4, TYP_BUILDING = 2;
+
+  // 基础地面（暗金色） - 全部使用HSB三参数
+  for (let yy = 0; yy < NUM; yy++) {
+    for (let xx = 0; xx < NUM; xx++) {
+      // 色相 45-50，饱和度 20-40，亮度 30-50
+      const h = random(45, 50);
+      const s = random(20, 40);
+      const b = random(30, 50);
+      const clr = color(h, s, b);
+      let item = new IsoCube(xx, yy, SZE, 1, 1, clr, SZE/4, TYP_BASE);
+      grid.push(item);
+    }
+  }
+
+  // 公园（淡金色）
+  for (let i = 0; i <= NUM / 5; i++) {
+    for (let tries = 0; tries < 10; tries++) {
+      const x = floor(random(1, NUM - 2));
+      const y = floor(random(1, NUM - 2));
+      const w = constrain(floor(random(5, 9)), 0, NUM - x - 1);
+      const h = constrain(floor(random(5, 9)), 0, NUM - y - 1);
+      // 临时检查用，颜色随意
+      let temp = new IsoCube(x, y, SZE, w, h, color(48, 50, 70), SZE/2, TYP_PARK);
+      if (!isInGrid(temp, grid)) {
+        for (let yy = y; yy < y + h; yy++) {
+          for (let xx = x; xx < x + w; xx++) {
+            // 色相 48-52，饱和度 40-60，亮度 60-80
+            const h = random(48, 52);
+            const s = random(40, 60);
+            const b = random(60, 80);
+            const clr = color(h, s, b);
+            let item = new IsoCube(xx, yy, SZE, 1, 1, clr, SZE/2, TYP_PARK);
+            grid.push(item);
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  // 河流（深金色/青铜色）
+  {
+    let w = floor(random(1, 3.5));
+    let x = floor(random(1, NUM - w - 1));
+    let y = 0;
+    let h = NUM;
+    for (let yy = y; yy < y + h; yy++) {
+      for (let xx = x; xx < x + w; xx++) {
+        // 色相 35-40，饱和度 40-60，亮度 40-50
+        const h = random(35, 40);
+        const s = random(40, 60);
+        const b = random(40, 50);
+        const clr = color(h, s, b);
+        let item = new IsoCube(xx, yy, SZE, 1, 1, clr, SZE/2, TYP_WATER);
+        grid.push(item);
+      }
+    }
+    x = 0;
+    w = NUM;
+    h = floor(random(1, 3.5));
+    y = floor(random(1, NUM - h - 1));
+    for (let yy = y; yy < y + h; yy++) {
+      for (let xx = x; xx < x + w; xx++) {
+        const h = random(35, 40);
+        const s = random(40, 60);
+        const b = random(40, 50);
+        const clr = color(h, s, b);
+        let item = new IsoCube(xx, yy, SZE, 1, 1, clr, 4, TYP_WATER);
+        grid.push(item);
+      }
+    }
+  }
+
+  // 建筑物
+  for (let i = 0; i < NUM * NUM / 10; i++) {
+    for (let tries = 0; tries < 100; tries++) {
+      let w = floor(random(1, 3.3));
+      let h = floor(random(1, 3.4));
+      let x = floor(random(0, NUM - w));
+      let y = floor(random(0, NUM - h));
+      const len = random() * random() * 15 * SZE;
+      let temp = new IsoCube(x, y, SZE, w, h, random(clrBuildings), len, TYP_BUILDING);
+      if (!isInGrid(temp, grid)) {
+        grid.push(temp);
+        break;
+      }
+    }
+  }
+
+  grid = grid.sort((a, b) => (a.x * a.y + a.x + a.y + a.w + a.h) - (b.x * b.y + b.x + b.y + b.w + b.h));
+}
+
+function isInGrid(r1, arr) {
+  for (let r2 of arr) {
+    if (!(r2.x >= r1.x + r1.w ||
+      r2.x + r2.w <= r1.x ||
+      r2.y >= r1.y + r1.h ||
+      r2.y + r2.h <= r1.y)) {
+      if (r1.typ <= r2.typ) return true;
+    }
+  }
+  return false;
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  generateCity();
+}
+</script>

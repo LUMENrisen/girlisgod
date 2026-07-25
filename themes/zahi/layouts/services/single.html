@@ -1,0 +1,39 @@
+{{ partial "header.html" . }}
+
+<article class="max-w-none">
+  <header class="mb-8">
+    <!-- 只保留标题，去除面包屑、日期、阅读时间等 -->
+    <h1 class="text-2xl md:text-3xl font-semibold text-stone-900 dark:text-stone-100 mb-4 leading-tight">
+      {{ .Title }}
+    </h1>
+  </header>
+
+  <!-- 去除目录、系列导航等 -->
+  <!-- 正文 -->
+  <div class="prose prose-stone dark:prose-invert max-w-none
+    prose-headings:font-semibold
+    prose-a:text-sage-600 dark:prose-a:text-sage-400 prose-a:no-underline hover:prose-a:underline
+    prose-code:text-sage-700 dark:prose-code:text-sage-400 prose-code:bg-stone-100 dark:prose-code:bg-stone-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+    prose-pre:bg-stone-900 dark:prose-pre:bg-stone-950 prose-pre:rounded-lg
+    prose-blockquote:border-l-2 prose-blockquote:border-sage-400 prose-blockquote:bg-stone-50 dark:prose-blockquote:bg-stone-900 prose-blockquote:not-italic
+    prose-img:rounded-lg
+    mb-10 px-4 md:px-6">
+    {{ .Content }}
+  </div>
+
+  <!-- 去除分享按钮、图谱、相关文章、上下篇文章 -->
+
+  <!-- 金色返回按钮 - 内联样式强制可见 -->
+  <div class="mt-16 text-center">
+    <a href="/services/" 
+       class="inline-block rounded-lg shadow-md"
+       style="padding: 0.7rem 2rem; background-color: #d4af37; color: #ffffff !important; font-weight: 500; font-size: 1rem;"
+       onmouseover="this.style.backgroundColor='#b8963a'"
+       onmouseout="this.style.backgroundColor='#c9a959'">
+      返回服务总览
+    </a>
+  </div>
+
+  <!-- 保留页脚 -->
+  {{ partial "footer.html" . }}
+</article>

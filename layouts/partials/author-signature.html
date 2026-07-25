@@ -1,0 +1,45 @@
+{{ $author := .Params.author | default .Site.Params.author | default "LUMEN" }}
+{{ $authorName := $author }}
+{{ $line2 := "" }}
+{{ $authorLink := "#" }}
+
+{{ if eq $author "路过" }}
+  {{ $authorName = "路过" }}
+  {{ $line2 = "“记录宅邸的每一次相遇。”" }}
+  {{ $authorLink = "/root/lu-guo/" }}
+{{ else if eq $author "路上" }}
+  {{ $authorName = "路上" }}
+  {{ $line2 = "“记录每一次深度思考。”" }}
+  {{ $authorLink = "/root/lu-shang/" }}
+{{ else if eq $author "路明" }}
+  {{ $authorName = "路明" }}
+  {{ $line2 = "“让想法落地生根。”" }}
+  {{ $authorLink = "/root/lu-ming/" }}
+{{ else if eq $author "路炎晨" }}
+  {{ $authorName = "路炎晨" }}
+  {{ $line2 = "“让思想被看见。”" }}
+  {{ $authorLink = "/root/lu-yanchen/" }}
+{{ else if eq $author "路宅" }}
+  {{ $authorName = "路宅" }}
+  {{ $line2 = "“让秩序成为自由的起点。”" }}
+  {{ $authorLink = "/root/lu-zhai/" }}
+{{ else if eq $author "路痴" }}
+  {{ $authorName = "路痴" }}
+  {{ $line2 = "“让根扎得更深。”" }}
+  {{ $authorLink = "/root/lu-chi/" }}
+{{ else if eq $author "路标" }}
+  {{ $authorName = "路标" }}
+  {{ $line2 = "“让灯塔指引方向。”" }}
+  {{ $authorLink = "/root/lu-biao/" }}
+{{ else }}
+  {{ $line2 = "" }}
+{{ end }}
+
+<div class="author-signature mt-10 pt-4 border-t border-stone-700/30 text-right text-xs">
+  {{ if $line2 }}
+  <div style="color: #2a2a2a; font-style: italic; text-align: right;">{{ $line2 }}</div>
+  {{ end }}
+  <div style="color: #2a2a2a; text-align: right;">
+    本文由「<a href="{{ $authorLink }}" class="text-gold-500 hover:text-gold-400 transition-colors">{{ $authorName }}</a>」撰写
+  </div>
+</div>

@@ -1,0 +1,146 @@
+theme = "zahi"
+baseURL = "https://www.girlisgod.top/"
+title = "女=神丨读 · 感"
+languageCode = "zh"
+defaultContentLanguage = "zh"
+
+# Enable useful features
+enableRobotsTXT = false
+enableEmoji = true
+enableGitInfo = false
+
+# Outputs
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+section = ["HTML", "RSS"]
+taxonomy = ["HTML", "RSS"]
+term = ["HTML", "RSS"]
+
+# Taxonomies
+[taxonomies]
+tag = "tags"
+series = "series"
+
+# Sitemap
+[sitemap]
+changefreq = "weekly"
+priority = 0.5
+filename = "sitemap.xml"
+
+
+# Navigation Menu
+[menu]
+[[menu.main]]
+identifier = "home"
+name = "GOD"
+url = "/"
+weight = 10
+
+[[menu.main]]
+identifier = "posts"
+name = "全部文章"
+url = "/posts/"
+weight = 20
+
+[[menu.main]]
+identifier = "series"
+name = "思想体系"
+url = "/series/"
+weight = 25
+
+
+[[menu.main]]
+identifier = "projects"
+name = "作品项目"
+url = "/projects/"
+weight = 27
+
+
+[[menu.main]]
+identifier = "service"
+name = "支持我们"
+url = "/support/"
+weight = 30
+
+[[menu.main]]
+identifier = "about"
+name = "GIRL"
+url = "/about/"
+weight = 35
+
+
+
+# Site Parameters
+[params]
+
+custom_css = ["css/custom.css"]
+
+# Site Info
+description = "一座女性视角的知识档案馆。重读经典，重感身体。"
+author = "米饭"
+keywords = ["女性视角", "经典重读", "女字宇宙", "女神归位", "八字重构", "女性史"]
+
+# Social links (shown in footer)
+github = "https://github.com/LUMENrisen"
+mail = "mailto:mifan@girlisgod.top"
+site = "https://girlisgod.top"
+
+# Social handles (for Twitter Cards)
+[params.social]
+twitter = "lumen"
+github = "LUMENrisen"
+
+# Open Graph default image (place in static/images/)
+# ogImage = "images/og-default.png"
+
+# Site verification (optional)
+# [params.verification]
+# google = "your-google-verification-code"
+# bing = "your-bing-verification-code"
+
+
+# Disqus comments (optional)
+# [services]
+# [services.disqus]
+# shortname = 'your-disqus-shortname'
+
+# Related content
+[related]
+includeNewer = true
+threshold = 80
+toLower = true
+[[related.indices]]
+  name = "tags"
+  weight = 100
+[[related.indices]]
+  name = "series"
+  weight = 80
+[[related.indices]]
+  name = "date"
+  weight = 10
+
+# Markup settings
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    noClasses = false
+    style = "dracula"
+  [markup.tableOfContents]
+    endLevel = 4
+    startLevel = 2
+
+# Privacy (GDPR)
+[privacy]
+  [privacy.googleAnalytics]
+    anonymizeIP = true
+    respectDoNotTrack = true
+  [privacy.x]
+    enableDNT = true
+  [privacy.youtube]
+    privacyEnhanced = true
+
+

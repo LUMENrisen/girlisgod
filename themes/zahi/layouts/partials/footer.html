@@ -1,0 +1,178 @@
+</main>
+
+	<!-- Footer -->
+	<footer class="border-t border-stone-200 dark:border-stone-800 mt-0">
+    	<div class="container max-w-3xl mx-auto px-4 md:px-6 py-8">
+        	<div class="flex flex-col items-center text-sm text-stone-500 dark:text-stone-400">
+				<!-- 第2行：自定义标语（可根据需要修改文字） -->
+            	<div class="mt-2 text-base text-stone-400 dark:text-stone-500">
+                	- for shunhua -
+            	</div>
+				
+				<!-- 第1行：品牌与版权 -->
+            	<div class="flex items-center gap-2">
+                	<span>LUMEN Atelier</span>
+                	<span>&copy; {{ dateFormat "2006" now }}</span>
+            	</div>
+				
+				
+        	</div>
+    	</div>
+	</footer>
+
+	{{ partial "search.html" . }}
+
+	<script src="/js/main.js"></script>
+
+	<!-- 回到顶部按钮 - 右上角 -空心金色描边-->
+	<a href="#" id="back-to-top" class="back-to-top" style="display: none; position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border: 2px solid #c9a959; color: #c9a959; border-radius: 50%; text-align: center; line-height: 36px; font-size: 24px; text-decoration: none; z-index: 9999; background-color: transparent; transition: all 0.3s;">↑</a>
+	
+	<script>
+  		document.addEventListener('DOMContentLoaded', function() {
+    		const backToTop = document.getElementById('back-to-top');
+    
+    		// 显示/隐藏按钮
+    		window.addEventListener('scroll', function() {
+      			if (window.scrollY > 300) {
+        			backToTop.style.display = 'block';
+      			} else {
+        			backToTop.style.display = 'none';
+      			}
+    		});
+    
+    		// 点击返回顶部
+    		backToTop.addEventListener('click', function(e) {
+      			e.preventDefault();
+      			window.scrollTo({
+        			top: 0,
+        			behavior: 'smooth'
+      			});
+    		});
+  		});
+	</script>
+
+	<!-- 左下角小纸条 - 带你好，竖排 
+	<div id="visitor-tag" class="visitor-tag" title="点击修改名字">
+	  <div class="tag-paper">
+	    <div class="greeting">你好，</div>
+	    <div class="name" id="tag-name-display"></div>
+	  </div>
+	</div>
+	-->
+
+	<style>
+	.visitor-tag {
+	  position: fixed;
+	  bottom: 4px;
+	  left: 0;
+	  z-index: 9999;
+	  cursor: pointer;
+	  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.2));
+	  animation: sway 4s ease-in-out infinite;
+	  transform-origin: bottom center;
+	}
+
+	/* 飘动动画 */
+	@keyframes sway {
+	  0% { transform: rotate(0deg) translateX(0); }
+	  20% { transform: rotate(1deg) translateX(3px); }
+	  40% { transform: rotate(-0.8deg) translateX(-2px); }
+	  60% { transform: rotate(1.2deg) translateX(4px); }
+	  80% { transform: rotate(-0.5deg) translateX(-1px); }
+	  100% { transform: rotate(0deg) translateX(0); }
+	}
+
+	/* 纸条本体 */
+	.tag-paper {
+	  background: rgba(220, 190, 130, 0.8);
+	  backdrop-filter: blur(4px);
+	  padding: 16px 8px;
+	  border-radius: 1px 1px 0 0;   /* 左上1，右上1，右下0，左下0（底部直角） */
+	  border: 1px solid rgba(200, 160, 100, 0.9);
+	  border-left: none;           /* 左侧无边框，紧贴边缘 */
+	  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  gap: 8px;                    /* 上下两个文字块之间的间距 */
+	}
+
+	.greeting, .name {
+	  writing-mode: vertical-rl;
+	  text-orientation: upright;
+	  color: #2a1e0a;
+	  font-weight: 500;
+	  letter-spacing: 4px;
+	  line-height: 1.6;
+	  text-shadow: 0 1px 2px rgba(255,255,200,0.8);
+	}
+
+	.greeting {
+	  font-size: 16px;
+	  opacity: 0.9;
+	}
+
+	.name {
+	  font-size: 18px;
+	  min-height: 5em;             /* 预留足够高度 */
+	}
+
+	/* 悬停效果 */
+	.visitor-tag:hover .tag-paper {
+	  background: rgba(240, 210, 150, 0.9);
+	  box-shadow: 6px 6px 14px rgba(0,0,0,0.25);
+	}
+
+	/* 移动端适配 */
+	@media (max-width: 640px) {
+	  .visitor-tag {
+	    bottom: 0;
+	    left: 0;
+	  }
+	  .tag-paper {
+	    padding: 12px 6px;
+	  }
+	  .greeting {
+	    font-size: 14px;
+	  }
+	  .name {
+	    font-size: 14px;
+	  }
+	}
+	</style>
+
+	<script>
+	(function() {
+	  const tag = document.getElementById('visitor-tag');
+	  const nameDisplay = document.getElementById('tag-name-display');
+
+	  // 名字池（不带数字）
+	  const defaultNames = ['旅人', '过客', '访客', '邻居', '朋友', '同学', '同路人'];
+
+	  // 获取或生成访客名
+	  let visitorName = localStorage.getItem('visitorName');
+	  if (!visitorName) {
+	    const randomIndex = Math.floor(Math.random() * defaultNames.length);
+	    visitorName = defaultNames[randomIndex];
+	    localStorage.setItem('visitorName', visitorName);
+	  }
+
+	  nameDisplay.textContent = visitorName;
+
+	  // 点击改名
+	  tag.addEventListener('click', function() {
+	    const newName = prompt('请输入你的临时名字（仅本次访问有效）', visitorName);
+	    if (newName && newName.trim() !== '') {
+	      visitorName = newName.trim();
+	      localStorage.setItem('visitorName', visitorName);
+	      nameDisplay.textContent = visitorName;
+	    }
+	  });
+	})();
+	</script>
+
+	<!-- 不蒜子访问统计 -->
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</body>
+</html>

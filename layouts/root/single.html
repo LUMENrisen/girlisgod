@@ -1,0 +1,110 @@
+{{ partial "header.html" . }}
+
+{{ partial "Roots-background.html" . }}
+
+<article class="max-w-none px-4 md:px-6">
+  <div class="prose prose-stone dark:prose-invert max-w-none mb-10">
+    {{ .Content }}
+  </div>
+
+  {{/* 获取当前作者名（从页面标题） */}}
+  {{ $authorName := .Title }}
+
+  {{/* 查询所有由该作者撰写的普通文章 */}}
+  {{ $authorPosts := where (where .Site.RegularPages "Section" "posts") "Params.author" $authorName }}
+
+  {{/* 查询所有由该作者参与撰写的系列（只要系列内有文章的作者匹配） */}}
+  {{ $authorSeries := slice }}
+  {{ range $seriesName, $taxonomy := .Site.Taxonomies.series }}
+    {{ $seriesPage := $taxonomy.Page }}
+    {{ $matched := false }}
+    {{ range $taxonomy.Pages }}
+      {{ if eq .Params.author $authorName }}
+        {{ $matched = true }}
+      {{ end }}
+    {{ end }}
+    {{ if $matched }}
+      {{ $authorSeries = $authorSeries | append $seriesPage }}
+    {{ end }}
+  {{ end }}
+
+  {{/* 查询所有由该作者撰写的作品 */}}
+  {{ $authorProjects := where (where .Site.RegularPages "Section" "projects") "Params.author" $authorName }}
+
+  {{ if or $authorPosts $authorSeries $authorProjects }}
+  <div class="author-works mt-10">
+    <h2 class="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-4">相关作品</h2>
+
+    {{/* 普通文章 */}}
+    {{ if $authorPosts }}
+    <div class="mb-6">
+      <h3 class="text-md font-medium text-stone-800 dark:text-stone-200 mb-3">📄 文章</h3>
+      <div class="space-y-4">
+        {{ range sort $authorPosts "Date" "desc" }}
+        <div class="border border-stone-200 dark:border-stone-800 rounded-lg p-4 hover:border-sage-300 transition">
+          <a href="{{ .RelPermalink }}" class="block">
+            <h4 class="font-medium text-stone-900 dark:text-stone-100 mb-1">{{ .Title }}</h4>
+            <p class="text-sm text-stone-500 dark:text-stone-400">{{ .Description | default .Summary | truncate 30 }}</p>
+            <div class="text-xs text-stone-400 mt-2">{{ .Date.Format "2006-01-02" }}</div>
+          </a>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+    {{/* 系列（只显示系列卡片） */}}
+    {{ if $authorSeries }}
+    <div class="mb-6">
+      <h3 class="text-md font-medium text-stone-800 dark:text-stone-200 mb-3">📚 系列</h3>
+      <div class="space-y-4">
+        {{ range sort $authorSeries "Date" "desc" }}
+        <div class="border border-stone-200 dark:border-stone-800 rounded-lg p-4 hover:border-sage-300 transition">
+          <a href="{{ .RelPermalink }}" class="block">
+            <h4 class="font-medium text-stone-900 dark:text-stone-100 mb-1">{{ .Title }}</h4>
+            <p class="text-sm text-stone-500 dark:text-stone-400">{{ .Description | default .Summary | truncate 100 }}</p>
+            <div class="text-xs text-stone-400 mt-2">{{ .Date.Format "2006-01-02" }}</div>
+          </a>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+    {{/* 作品 */}}
+    {{ if $authorProjects }}
+    <div class="mb-6">
+      <h3 class="text-md font-medium text-stone-800 dark:text-stone-200 mb-3">🛠️ 作品</h3>
+      <div class="space-y-4">
+        {{ range sort $authorProjects "Date" "desc" }}
+        <div class="border border-stone-200 dark:border-stone-800 rounded-lg p-4 hover:border-sage-300 transition">
+          <a href="{{ .RelPermalink }}" class="block">
+            <h4 class="font-medium text-stone-900 dark:text-stone-100 mb-1">{{ .Title }}</h4>
+            <p class="text-sm text-stone-500 dark:text-stone-400">{{ .Description | default .Summary | truncate 100 }}</p>
+            <div class="text-xs text-stone-400 mt-2">{{ .Date.Format "2006-01-02" }}</div>
+          </a>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+  </div>
+  {{ end }}
+
+  <!-- 返回团队介绍链接（带锚点定位） -->
+  <div class="mt-16 text-center">
+    <a href="/root/#members" 
+       class="inline-flex items-center gap-2 rounded-lg shadow-md"
+       style="padding: 0.7rem 2rem; background-color: #d4af37; color: #ffffff !important; font-weight: 500; font-size: 1rem;"
+       onmouseover="this.style.backgroundColor='#b8963a'"
+       onmouseout="this.style.backgroundColor='#c9a959'">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7L9 12l7 5" />
+      </svg>
+      <span>查看更多伙伴</span>
+    </a>
+  </div>
+</article>
+
+{{ partial "footer.html" . }}

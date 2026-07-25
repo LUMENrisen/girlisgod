@@ -1,0 +1,84 @@
+<div id="root-canvas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<script>
+// 螺旋方块背景 (p5.js) - 可移动中心 + 缩放 + 速度控制
+new p5((p) => {
+  // ========== 可调参数 ==========
+  const goldColor = [1.0, 0.84, 0.0]; // 金色 (RGB)
+  const fillAlpha = 1;                 // 填充透明度 (0-255)
+  const strokeAlpha = 2;                // 描边透明度 (0-255)
+  const lineWeight = 1;                // 描边粗细
+  
+  // 中心位置 (相对于画布宽度和高度的比例，0~1)
+  const centerX = 0.9;    // 0 左边缘，1 右边缘，0.8 偏右
+  const centerY = 0.05;    // 0 上边缘，1 下边缘，0.2 偏上
+  
+  // 整体缩放因子 (1 为原始大小，>1 放大，<1 缩小)
+  const scaleFactor = 1.5;  
+
+  // 速度乘数 (越小变化越慢)
+  const speedFactor = 0.1;  // 可根据需要调整
+  // =============================
+
+  p.setup = function() {
+    let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+    canvas.parent('root-canvas-container');
+    p.colorMode(p.RGB);
+    p.background(0, 0, 0, 0); // 透明背景
+    p.strokeWeight(lineWeight);
+    p.blendMode(p.BLEND);
+  };
+
+  p.draw = function() {
+    p.clear(); // 透明背景
+
+    // 用噪声驱动参数，乘以速度因子使其缓慢变化
+    let v = p.noise(p.frameCount * speedFactor * 0.001, 2.5) * 15 + 15;
+    let e = p.noise(p.frameCount * speedFactor * 0.002) * 0.8 + 1;
+    let ne = p.noise(p.frameCount * speedFactor * 0.0015, 1.5) * 0.8 + 1;
+    let steps = p.noise(p.frameCount * speedFactor * 0.0005, 3.5) * 10 + 20;
+    let gth = p.frameCount * speedFactor * 0.001 * p.TWO_PI; // 整体旋转
+
+    p.fill(goldColor[0]*255, goldColor[1]*255, goldColor[2]*255, fillAlpha);
+    p.stroke(goldColor[0]*255, goldColor[1]*255, goldColor[2]*255, strokeAlpha);
+
+    p.push();
+    // 先移动到目标中心点 (根据比例计算绝对坐标)
+    let cx = p.width * centerX;
+    let cy = p.height * centerY;
+    p.translate(cx, cy);
+    // 再整体缩放
+    p.scale(scaleFactor);
+
+    for (let i = 0; i < p.TWO_PI * 50; i += p.TWO_PI / steps) {
+      // 第一个点
+      let r = v * p.pow(i, 1/e);
+      let x = r * p.cos(i);
+      let y = r * p.sin(i);
+
+      // 第二个点（间隔一个步长）
+      let ni = i + p.TWO_PI / steps;
+      let rr = v * p.pow(ni, 1/ne);
+      let nx = rr * p.cos(ni);
+      let ny = rr * p.sin(ni);
+
+      // 整体旋转
+      let rx = p.cos(gth) * x - p.sin(gth) * y;
+      let ry = p.sin(gth) * x + p.cos(gth) * y;
+      let rnx = p.cos(gth) * nx - p.sin(gth) * ny;
+      let rny = p.sin(gth) * nx + p.cos(gth) * ny;
+
+      // 绘制矩形
+      p.rectMode(p.CORNERS);
+      p.rect(rx, ry, rnx, rny);
+      // 对称绘制另一侧
+      p.rect(-rx, -ry, -rnx, -rny);
+    }
+    p.pop();
+  };
+
+  p.windowResized = function() {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+  };
+});
+</script>

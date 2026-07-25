@@ -1,0 +1,407 @@
+/* 黑金配色 - 金色系 */
+:root {
+  --bg-dark: #0a0a0a;        /* 深黑背景 */
+  --text-light: #e5e5e5;      /* 浅灰文字 */
+  --gold: #d4af37;            /* 金色 */
+  --gold-light: #f1c40f;      /* 亮金色/黄色 */
+  --gold-dark: #b8860b;       /* 暗金色 */
+  --gray-dark: #2a2a2a;       /* 深灰边框 */
+}
+
+body {
+  background-color: var(--bg-dark) !important;
+  color: var(--text-light) !important;
+}
+
+/* 链接和强调色 */
+a, .text-sage-600, .text-sage-400, .hover\:text-sage-600:hover {
+  color: var(--gold) !important;
+}
+a:hover {
+  color: var(--gold-light) !important;
+}
+
+/* 边框 */
+.border-stone-200, .border-stone-800, .border-sage-500 {
+  border-color: var(--gray-dark) !important;
+}
+
+/* 背景色 - 深色区域 */
+.bg-stone-50, .dark\:bg-stone-900, .hover\:bg-stone-100:hover, .dark\:hover\:bg-stone-800:hover {
+  background-color: #1a1a1a !important;
+}
+
+/* 标题文字 */
+h1, h2, h3, h4, .text-stone-900, .dark\:text-stone-100, .font-semibold {
+  color: #ffffff !important;
+}
+
+/* 次要文字 */
+.text-stone-600, .dark\:text-stone-400, .text-stone-500, .dark\:text-stone-500 {
+  color: #a3a3a3 !important;
+}
+
+/* 按钮和交互元素 */
+button:hover, .btn:hover {
+  background-color: rgba(212, 175, 55, 0.1) !important;
+}
+
+/* 当前菜单项高亮 */
+header nav ul li a.active {
+  color: var(--gold-light) !important;
+  background-color: rgba(212, 175, 55, 0.15) !important;
+}
+
+/* 系列图标 */
+.series-icon svg, .series-icon-lg svg {
+  color: var(--gold) !important;
+}
+
+/* 进度条 */
+.bg-sage-500, .bg-sage-600, div.series-nav-progress-bar {
+  background-color: var(--gold) !important;
+}
+.h-2.bg-stone-200, div.series-nav-progress {
+  background-color: var(--gray-dark) !important;
+  height: 4px !important;
+  border-radius: 2px !important;
+  overflow: hidden !important;
+}
+
+/* 系列当前项 */
+span.series-nav-item-num.current {
+  background-color: #d4af37 !important;
+  color: #0a0a0a !important;
+  border-color: #d4af37 !important;
+}
+span.series-nav-current-badge {
+  background-color: rgba(212, 175, 55, 0.15) !important;
+  color: #d4af37 !important;
+  border: 1px solid #d4af37 !important;
+  border-radius: 12px !important;
+  padding: 0.125rem 0.5rem !important;
+  font-size: 0.7rem !important;
+}
+span.series-complete-badge span {
+  color: #d4af37 !important;
+}
+span.series-complete-badge svg {
+  stroke: #d4af37 !important;
+}
+
+/* 系列导航按钮 */
+.series-nav-btn {
+  background-color: transparent !important;
+  border: 1px solid var(--gold) !important;
+  color: var(--gold) !important;
+}
+.series-nav-btn:hover {
+  background-color: var(--gold) !important;
+  color: var(--bg-dark) !important;
+}
+.series-nav-btn.primary {
+  background-color: var(--gold) !important;
+  color: var(--bg-dark) !important;
+}
+.series-nav-btn.primary:hover {
+  background-color: var(--gold-light) !important;
+}
+
+/* 图谱节点 */
+.graph-node:not(.tag-node) {
+  fill: #d4af37 !important;
+  stroke: #f1c40f !important;
+  stroke-width: 1.5px !important;
+}
+.graph-node.current-node {
+  fill: #f1c40f !important;
+  stroke: #d4af37 !important;
+  stroke-width: 2.5px !important;
+}
+.graph-node.tag-node {
+  fill: #cd7f32 !important;
+  stroke: #b87333 !important;
+  stroke-width: 1.5px !important;
+}
+
+/* 节点标签 */
+.graph-label {
+  fill: #e5e5e5 !important;
+  font-size: 10px !important;
+}
+.graph-label.tag-label {
+  fill: #cd7f32 !important;
+  font-weight: 500 !important;
+}
+
+/* 基础字号 */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* 加宽主要内容区域 */
+.container, main.content, .content {
+  max-width: 1200px !important;
+}
+
+/* 导航栏布局 */
+body > header {
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+body > header > nav {
+  max-width: 100% !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+body > header > nav > div.flex.h-16.items-center.justify-between {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+body > header > nav > div.flex.h-16.items-center.justify-between > div {
+  flex: 1 !important;
+  display: flex !important;
+  width: 100% !important;
+}
+
+/* 菜单栏 */
+body > header > nav > div.flex.h-16.items-center.justify-between > div > ul {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+body > header > nav > div.flex.h-16.items-center.justify-between > div > ul li {
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  text-align: center !important;
+  list-style: none !important;
+}
+body > header > nav > div.flex.h-16.items-center.justify-between > div > ul li a {
+  white-space: nowrap !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  display: inline-block !important;
+  width: auto !important;
+  min-width: 60px !important;
+  text-align: center !important;
+  font-size: 0.9rem !important;
+}
+
+/* 菜单项分割线 */
+body > header > nav > div.flex.h-16.items-center.justify-between > div > ul li:not(:last-child)::after {
+  content: "|";
+  color: #4a4a4a;
+  position: absolute;
+  right: -0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+/* 手机端菜单适配 - 自动适应宽度 */
+@media (max-width: 768px) {
+  /* 导航栏内边距最小化 */
+  body > header > nav {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+  
+  /* 菜单容器宽度自适应 */
+  body > header > nav > div.flex.h-16.items-center.justify-between > div {
+    width: 100% !important;
+    overflow: visible !important;
+  }
+  
+  /* 菜单项使用 flex 自动分配宽度 */
+  body > header > nav > div.flex.h-16.items-center.justify-between > div > ul {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+  }
+  
+  /* 每个菜单项自动收缩 */
+  body > header > nav > div.flex.h-16.items-center.justify-between > div > ul li {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+  }
+  
+  /* 菜单链接文字自动缩小到不折行 */
+  body > header > nav > div.flex.h-16.items-center.justify-between > div > ul li a {
+    font-size: clamp(0.7rem, 3vw, 0.9rem) !important;
+    padding-left: 0.2rem !important;
+    padding-right: 0.2rem !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  
+  /* 分割线位置微调 */
+  body > header > nav > div.flex.h-16.items-center.justify-between > div > ul li:not(:last-child)::after {
+    right: -0.2rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* 让首页内容浮在风背景之上 */
+.banner-rhythm, 
+section, 
+header h1, 
+.intro-toggle, 
+.projects-grid {
+  position: relative;
+  z-index: 10;
+}
+
+/* 风画布容器定位 */
+#wind-canvas-container {
+  position: fixed !important; /* 改为 fixed，让风背景覆盖整个视口 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* 确保内容区域在画布之上且背景透明 */
+main.content, 
+body > header, 
+body > footer,
+article,
+.posts-list,
+.series-list,
+.project-list {
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+}
+
+
+
+/* 画布容器固定在底层 */
+#radiance-canvas-container {
+  z-index: 0 !important;
+}
+
+/* 强制覆盖所有引用块相关颜色为金色 */
+blockquote,
+.prose blockquote,
+.dark .prose blockquote,
+blockquote p,
+.prose blockquote p,
+.dark .prose blockquote p,
+blockquote::before,
+blockquote::after,
+.prose blockquote::before,
+.prose blockquote::after {
+  color: #e5e5e5 !important;
+  border-left-color: #c9a959 !important;
+  border-right-color: #c9a959 !important;
+  background-color: #1a1a1a !important;
+}
+
+/* 确保链接颜色不受影响 */
+blockquote a,
+.prose blockquote a {
+  color: #c9a959 !important;
+}
+blockquote a:hover {
+  color: #d4b87a !important;
+}
+
+/* 所有行内代码和代码块颜色改为金色 */
+code, pre code, .prose code, .wikilink code {
+  color: var(--gold) !important;
+}
+
+/* 如果你希望保留代码块的背景色，可以不加背景覆盖 */
+
+/* 优化文章中的表格在移动端的显示 */
+.prose table {
+  width: 100%;
+  table-layout: fixed; /* 固定列宽布局，由我们指定宽度 */
+  border-collapse: collapse;
+}
+
+/* 第一列（通常是最左侧的列）设置最小宽度 */
+.prose table td:first-child,
+.prose table th:first-child {
+  min-width: 4em;        /* 至少能容纳2个汉字（按1em≈2汉字） */
+  white-space: normal;   /* 允许换行，但列宽已保证 */
+  word-break: break-word;
+}
+
+/* 其他列按需分配剩余宽度 */
+.prose table td,
+.prose table th {
+  word-break: break-word;
+  padding: 0.5rem 0.3rem; /* 适当收窄内边距，让出更多空间 */
+}
+
+/* 如果表格仍然溢出，允许水平滚动（备选） */
+.prose table {
+  overflow-x: auto;
+  display: block;
+}
+
+/* 让文章中的表格整体居中 */
+.prose table {
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;                /* 表格宽度由内容决定，不强制拉伸 */
+  display: table;             /* 恢复默认的表格显示方式 */
+}
+
+/* 可选：给表格添加左右内边距，避免贴边 */
+.prose table td,
+.prose table th {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+:root {
+  --gold: #c9a959;
+  --gold-light: #d4b87a;
+}
+.border-gold-500 {
+  border-color: var(--gold) !important;
+}
+.text-gold-500 {
+  color: var(--gold) !important;
+}
+.hover\:border-gold-500:hover {
+  border-color: var(--gold-light) !important;
+}
+.hover\:text-gold-400:hover {
+  color: var(--gold-light) !important;
+}
+
+/* 目录容器无边框无背景 */
+.toc-wrapper {
+  border: none !important;
+  background: transparent !important;
+}
+.toc-list {
+  border: none !important;
+  background: transparent !important;
+  list-style: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+

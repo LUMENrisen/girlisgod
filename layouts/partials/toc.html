@@ -1,0 +1,18 @@
+{{- $headers := findRE "<h[2-4].*?>(.|\n])+?</h[2-4]>" .Content -}}
+{{- $has_headers := ge (len $headers) 1 -}}
+{{- if $has_headers -}}
+<ul class="space-y-1 text-sm text-left" style="list-style: none; padding-left: 0;">
+  {{- range $headers -}}
+    {{- $headerLevel := index (findRE "[2-4]" . 1) 0 -}}
+    {{- $id := index (findRE "(id=\"(.*?)\")" . 9) 0 -}}
+    {{- $cleanedID := replace (replace $id "id=\"" "") "\"" "" -}}
+    {{- $header := replaceRE "<h[2-4].*?>((.|\n])+?)</h[2-4]>" "$1" . -}}
+    {{- $indent := 0 -}}
+    {{- if eq $headerLevel "3" }}{{ $indent = 1 }}{{ end -}}
+    {{- if eq $headerLevel "4" }}{{ $indent = 2 }}{{ end -}}
+    <li style="margin-left: {{ mul $indent 1 }}rem;">
+      <a href="#{{ $cleanedID }}" class="text-stone-500 dark:text-stone-400 hover:text-sage-400 block" style="text-decoration: underline; text-underline-offset: 2px;">{{ $header | plainify }}</a>
+    </li>
+  {{- end -}}
+</ul>
+{{- end -}}

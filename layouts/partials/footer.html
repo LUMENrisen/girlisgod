@@ -1,0 +1,67 @@
+</main>
+
+	<!-- Footer -->
+	<footer class="border-t border-stone-200 dark:border-stone-800 mt-0">
+    	<div class="container max-w-3xl mx-auto px-4 md:px-6 py-8">
+        	<div class="flex flex-col items-center text-sm text-stone-500 dark:text-stone-400">
+				<!-- 第4行：自定义标语（可根据需要修改文字） -->
+            	<div class="mt-2 text-base text-stone-400 dark:text-stone-500">
+                	用文字抵抗遗忘，用身体记住感受。
+            	</div>
+				<!-- 第3行：自定义标语（可根据需要修改文字） -->
+            	<div class="mt-2 text-base text-stone-400 dark:text-stone-500">
+                	补充，而非对抗。
+            	</div>
+				<!-- 第2行：自定义标语（可根据需要修改文字） -->
+            	<div class="mt-2 text-base text-stone-400 dark:text-stone-500">
+                	- for shunhua -
+            	</div>
+				<!-- 第1行：品牌与版权 -->
+            	<div class="flex items-center gap-2">
+                	<span>LUMEN Atelier</span>
+                	<span>&copy; {{ dateFormat "2006" now }}</span>
+            	</div>
+				
+				
+        	</div>
+    	</div>
+	</footer>
+
+	{{ partial "search.html" . }}
+
+	<script src="/js/main.js"></script>
+
+	<!-- 回到顶部按钮 - 右上角 -空心金色描边-->
+	<a href="#" id="back-to-top" class="back-to-top" style="display: none; position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border: 2px solid #c9a959; color: #c9a959; border-radius: 50%; text-align: center; line-height: 36px; font-size: 24px; text-decoration: none; z-index: 9999; background-color: transparent; transition: all 0.3s;">↑</a>
+	
+	<script>
+  		document.addEventListener('DOMContentLoaded', function() {
+    		const backToTop = document.getElementById('back-to-top');
+    
+    		// 显示/隐藏按钮
+    		window.addEventListener('scroll', function() {
+      			if (window.scrollY > 300) {
+        			backToTop.style.display = 'block';
+      			} else {
+        			backToTop.style.display = 'none';
+      			}
+    		});
+    
+    		// 点击返回顶部
+    		backToTop.addEventListener('click', function(e) {
+      			e.preventDefault();
+      			window.scrollTo({
+        			top: 0,
+        			behavior: 'smooth'
+      			});
+    		});
+  		});
+	</script>
+
+	
+
+	<!-- 不蒜子访问统计 -->
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</body>
+</html>

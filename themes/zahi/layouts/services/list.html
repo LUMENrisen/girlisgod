@@ -1,0 +1,32 @@
+{{ partial "header.html" . }}
+
+<!-- 若水背景 -->
+<!--
+{{ partial "rivers-background.html" . }}
+ -->
+
+<!-- 标题
+<div class="mb-8 px-4 md:px-6">
+  <h1 class="text-2xl md:text-3xl font-bold text-stone-900 dark:text-stone-100 mb-3">
+    {{ .Title }}
+  </h1>
+  {{ with .Description }}
+  <p class="text-stone-500 dark:text-stone-400">{{ . }}</p>
+  {{ end }}
+</div>
+-->
+
+<div class="prose dark:prose-invert max-w-none px-4 md:px-6">
+  {{ .Content }}
+</div>
+
+<!-- 如果服务是列表形式，可以遍历子页面 
+{{ range .Pages }}
+<article class="mb-6">
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  <p>{{ .Description }}</p>
+</article>
+{{ end }}
+-->
+
+{{ partial "footer.html" . }}

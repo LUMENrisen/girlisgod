@@ -1,0 +1,163 @@
+<div id="maze-canvas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+<script>
+// 全屏金色迷宫背景 - 成蹊 (放大局部 + 慢速生成)
+new p5((p) => {
+  // ========== 可调参数 ==========
+  const cellCount = 30;          // 迷宫网格大小（奇数），越大越复杂
+  const pathColor = '#FFD700';    // 金色（十六进制）
+  const lineWeight = 5;           // 线条粗细
+  const lineAlpha = 0.3;          // 线条透明度 (0~1)
+  const scaleFactor = 2.5;        // 放大倍数（>1 显示局部）
+  const generationInterval = 20;  // 每多少帧生成一步（数值越大越慢）
+  const resetDelay = 5000;        // 生成完成后延迟重置的时间（毫秒）
+  // =============================
+  
+  const PATH = false;
+  const WALL = true;
+  
+  let mazeArray = [];
+  let lines = [];                // 存储所有路径线段 [{x1,y1,x2,y2}]
+  let gen;                       // 生成器
+  let generationComplete = false;
+  let cellSize;                  // 每个单元格的原始像素大小（未缩放前）
+  let resetTimer = null;         // 重置定时器
+  let frameCounter = 0;          // 帧计数器，用于慢速生成
+  
+  p.setup = function() {
+    let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+    canvas.parent('maze-canvas-container');
+    p.strokeCap(p.ROUND);
+    p.noFill();
+    p.background(0,0,0,0); // 透明
+    
+    // 计算单元格大小，使迷宫基于窗口较小边填满（但后续会放大）
+    let minDim = Math.min(p.width, p.height);
+    cellSize = minDim / cellCount;
+    
+    resetMaze();
+  };
+  
+  function resetMaze() {
+    // 重置迷宫数组
+    mazeArray = [];
+    for (let x = 0; x < cellCount; x++) {
+      mazeArray[x] = [];
+      for (let y = 0; y < cellCount; y++) {
+        mazeArray[x][y] = WALL;
+      }
+    }
+    lines = [];
+    generationComplete = false;
+    gen = generateMaze();
+    
+    // 清除之前的定时器
+    if (resetTimer) {
+      clearTimeout(resetTimer);
+      resetTimer = null;
+    }
+  }
+  
+  function* generateMaze() {
+    const start = { x: 1, y: 1 };
+    mazeArray[start.x][start.y] = PATH;
+    const history = [start];
+    
+    while (history.length > 0) {
+      const { x, y } = history.pop();
+      const directions = p.shuffle([
+        { dx: +1, dy:  0 },
+        { dx:  0, dy: +1 },
+        { dx: -1, dy:  0 },
+        { dx:  0, dy: -1 },
+      ]);
+      
+      for (const { dx, dy } of directions) {
+        const newX = x + dx * 2;
+        const newY = y + dy * 2;
+        if (
+          0 < newX && newX < cellCount &&
+          0 < newY && newY < cellCount &&
+          mazeArray[newX][newY] === WALL
+        ) {
+          mazeArray[x + dx][y + dy] = PATH;
+          mazeArray[newX][newY] = PATH;
+          history.push({ x: newX, y: newY });
+          
+          // 记录线段（坐标转换为像素，使用单元格中心）
+          lines.push({
+            x1: x * cellSize + cellSize/2,
+            y1: y * cellSize + cellSize/2,
+            x2: newX * cellSize + cellSize/2,
+            y2: newY * cellSize + cellSize/2
+          });
+          yield;
+        }
+      }
+    }
+    generationComplete = true;
+    // 启动重置定时器
+    resetTimer = setTimeout(() => {
+      resetMaze();
+    }, resetDelay);
+  }
+  
+  p.draw = function() {
+    p.clear(); // 透明背景
+    
+    // 慢速生成：每 generationInterval 帧才生成一步
+    if (!generationComplete) {
+      if (frameCounter % generationInterval === 0) {
+        gen.next();
+      }
+      frameCounter++;
+    }
+    
+    // 绘制所有路径线条（应用缩放和平移）
+    p.push();
+    
+    // 先平移使迷宫局部显示在合适位置（例如居中偏下）
+    // 将迷宫放大后，我们希望显示其右下部分，因此将原点偏移到画布中心偏下
+    // 通过 translate 和 scale 实现
+    p.translate(p.width * 0.1, p.height * 0.1); // 将放大后的迷宫中心移到此处
+    p.scale(scaleFactor);
+    
+    // 现在坐标系统是放大后的，线条坐标基于原始像素，需要反向平移使局部显示
+    // 为了显示右下部分，我们可以将迷宫整体向左上移动，使右下部分进入视口
+    // 简单起见，我们平移一个负值，例如 -cellSize * cellCount * 0.5 之类的
+    // 但更好的办法是直接让迷宫原点偏移到合适位置
+    // 我们可以在记录线段时使用绝对坐标，然后在绘制时应用平移缩放，这样线条坐标就是原始像素。
+    // 当前线条坐标是原始像素（基于画布未缩放），所以缩放后会超出画布。我们需要将线条坐标视为在缩放后的世界坐标中。
+    // 解决方案：在绘制前先 translate 到我们希望显示的区域，然后 scale，然后绘制线条（坐标就是原始像素）。
+    // 这样，放大后的图像会出现在画布相应位置。
+    
+    // 由于我们已经 translate 到画布某点，然后 scale，那么线条的原始像素坐标会被放大并从该点开始绘制。
+    // 如果我们希望显示迷宫的右下部分，需要将线条整体向左上移动，使右下部分位于平移后的原点附近。
+    // 所以，我们需要再应用一个平移，将线条的原始坐标偏移。
+    
+    // 这里简单实现：让迷宫居中显示，但放大后只有中间部分可见。如果要显示右下，可以额外偏移。
+    // 我们增加一个偏移参数：
+    let offsetX = -cellSize * cellCount * 0.2; // 向左偏移，使右边部分进入视野
+    let offsetY = -cellSize * cellCount * 0.2; // 向上偏移，使下边部分进入视野
+    
+    p.translate(offsetX, offsetY);
+    
+    // 设置线条样式
+    p.stroke(pathColor);
+    p.strokeWeight(lineWeight);
+    p.stroke(p.red(pathColor), p.green(pathColor), p.blue(pathColor), lineAlpha * 255);
+    
+    for (let l of lines) {
+      p.line(l.x1, l.y1, l.x2, l.y2);
+    }
+    p.pop();
+  };
+  
+  p.windowResized = function() {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+    // 重新计算单元格大小，并重新生成迷宫
+    let minDim = Math.min(p.width, p.height);
+    cellSize = minDim / cellCount;
+    resetMaze();
+  };
+});
+</script>

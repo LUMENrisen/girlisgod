@@ -1,0 +1,32 @@
+{{ partial "header.html" . }}
+
+<div class="px-4 md:px-6 max-w-3xl mx-auto">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl md:text-3xl font-semibold text-stone-900 dark:text-stone-100">{{ .Title }}</h1>
+    <span class="text-sm text-stone-500 dark:text-stone-400">{{ len site.Data.updates }} 条</span>
+  </div>
+
+  <div class="space-y-1 mb-12">
+    {{ range sort site.Data.updates "date" "desc" }}
+    <a href="{{ .link | default "#" }}" class="block p-2 -mx-2 rounded hover:bg-stone-50 dark:hover:bg-stone-900 transition">
+      <div class="flex items-start justify-between">
+        <span class="text-sm text-stone-600 dark:text-stone-400">{{ .content }}</span>
+        <time class="text-xs text-stone-400 dark:text-stone-500 whitespace-nowrap ml-2">{{ dateFormat "2006-01-02" .date }}</time>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</div>
+
+<!-- 金色返回按钮 -->
+<div class="mt-16 text-center">
+  <a href="/" 
+     class="inline-block rounded-lg shadow-md"
+     style="padding: 0.7rem 2rem; background-color: #d4af37; color: #ffffff !important; font-weight: 500; font-size: 1rem;"
+     onmouseover="this.style.backgroundColor='#b8963a'"
+     onmouseout="this.style.backgroundColor='#c9a959'">
+    返回首页
+  </a>
+</div>
+
+{{ partial "footer.html" . }}

@@ -1,0 +1,115 @@
+<div id="rivers-canvas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+<script>
+// 若水 - 着色器动态背景 (p5.js + WebGL)
+// 基于 SamuelYAN 的作品改编：https://twitter.com/SamuelAnn0924
+
+new p5((p) => {
+  // ========== 可调参数 ==========
+  const goldColor = [1.0, 0.84, 0.0]; // 金色 (RGB)
+  const bgColor = [0.04, 0.04, 0.04]; // 深黑背景
+  const stripeFrequency = 80.0;        // 条纹频率
+  const numCircles = 28;              // 光点数量
+  const flowSpeed = 0.05;               // 整体流动速度
+  // =============================
+
+  // 顶点着色器（固定）
+  const vert = `
+    attribute vec3 aPosition;
+    attribute vec2 aTexCoord;
+    void main() {
+      vec4 positionVec4 = vec4(aPosition, 1.0);
+      positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
+      gl_Position = positionVec4;
+    }
+  `;
+
+  // 片段着色器（动态水流）
+    const frag = `
+    #ifdef GL_ES
+    precision mediump float;
+    #endif
+
+    uniform vec2 u_resolution;
+    uniform float u_time;
+
+    const float stripeWidth = 0.2;
+    const float stripeFrequency = 40.0;        // 可调整粗细（数值越小越粗）
+    const int NUM_CIRCLES = 88;
+    const float goldIntensity = 0.99;            // 控制金色背景强度
+
+    const vec3 gold = vec3(0.08, 0.05, 0.01);     // 金色
+    const vec3 dark = vec3(0.04, 0.04, 0.04);   // 深色
+
+    float hash(float n) { return fract(sin(n) * 43758.5453); }
+
+    float noise(vec2 p) {
+        vec2 i = floor(p);
+        vec2 f = fract(p);
+        f = f*f*(3.0 - 2.0*f);
+        float n = i.x + i.y*57.0;
+        return mix(mix(hash(n + 0.0), hash(n + 1.0), f.x),
+               mix(hash(n + 57.0), hash(n + 58.0), f.x), f.y);
+    }
+
+    void main() {
+        vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+        uv.x *= u_resolution.x / u_resolution.y;
+
+        // 可选整体放大图案（如需要更粗可减小系数）
+        uv *= 0.8;  // 0.8使图案更大（条纹更粗），可删除此行保持原大小
+
+        float stripes = sin(uv.y * stripeFrequency + noise(uv*5.0 + u_time * 0.2) * 6.2831) * 0.75;
+
+        float circles = 0.2;
+        for(int i = 0; i < NUM_CIRCLES; i++) {
+            float seed = float(i) * 1.0;
+            vec2 pos0 = vec2(2.0 * hash(seed+1.0), 2.0 * hash(seed+2.0));
+
+            float speedX = 0.05 + 0.05 * hash(seed+3.0);
+            float speedY = 0.4 + 0.05 * hash(seed+4.0);
+            vec2 pos = pos0 + vec2(sin(u_time * speedX + hash(seed+5.0)*6.2831),
+                                cos(u_time * speedY + hash(seed+6.0)*6.2831)) * 0.1;
+
+            float baseRadius = 0.05 + 0.05 * hash(seed+7.0);
+            float pulseAmp = 0.02 + 0.03 * hash(seed+8.0);
+            float pulseFreq = 1.0 + 1.0 * hash(seed+9.0);
+            float pulse = sin(u_time * pulseFreq + hash(seed+10.0)*6.2831) * pulseAmp;
+
+            float d = length(uv - pos);
+            circles += smoothstep(baseRadius + pulse, 0.0, d);
+        }
+
+        float mixFactor = smoothstep(-stripeWidth, stripeWidth, stripes + circles);
+        mixFactor *= goldIntensity;  // 控制图案深浅
+        const float bgAlpha = 0.01;          // 透明度，0.0~1.0
+
+        vec3 color = mix(gold, dark, mixFactor);  // 金色背景，深色图案
+        
+        gl_FragColor = vec4(color, 1);
+    }
+    `;
+
+  let theShader;
+
+  p.preload = function() {
+    theShader = new p5.Shader(this._renderer, vert, frag);
+  };
+
+  p.setup = function() {
+    let canvas = p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);
+    canvas.parent('rivers-canvas-container');
+    p.noStroke();
+  };
+
+  p.draw = function() {
+    p.shader(theShader);
+    theShader.setUniform('u_resolution', [p.width, p.height]);
+    theShader.setUniform('u_time', p.millis() / 1000.0);
+    p.rect(0, 0, p.width, p.height);
+  };
+
+  p.windowResized = function() {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+  };
+});
+</script>

@@ -1,0 +1,138 @@
+theme = "zahi"
+baseURL = "https://www.lumenatelier.top/"
+title = "LUMEN丨Atelier"
+languageCode = "zh"
+defaultContentLanguage = "zh"
+
+# Enable useful features
+enableRobotsTXT = false
+enableEmoji = true
+enableGitInfo = true
+
+# Outputs
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+section = ["HTML", "RSS"]
+taxonomy = ["HTML", "RSS"]
+term = ["HTML", "RSS"]
+
+# Taxonomies
+[taxonomies]
+tag = "tags"
+series = "series"
+
+# Sitemap
+[sitemap]
+changefreq = "weekly"
+priority = 0.5
+filename = "sitemap.xml"
+
+
+# Navigation Menu
+[menu]
+[[menu.main]]
+identifier = "home"
+name = "首页"
+url = "/"
+weight = 10
+
+[[menu.main]]
+identifier = "posts"
+name = "文章"
+url = "/posts"
+weight = 20
+
+[[menu.main]]
+identifier = "series"
+name = "系列"
+url = "/series"
+weight = 25
+
+[[menu.main]]
+identifier = "projects"
+name = "作品"
+url = "/projects"
+weight = 27
+
+[[menu.main]]
+identifier = "graph"
+name = "图谱"
+url = "/graph"
+weight = 30
+
+# Site Parameters
+[params]
+# Site Info
+description = "LUMEN Atelier丨数字宅邸，记录思想、经历与作品。"
+author = "LUMEN"
+keywords = ["独立研究者", "建筑学", "数字人文", "思想顾问", "七个房间"]
+
+# Social links (shown in footer)
+github = "https://github.com/LUMENrisen"
+mail = "mailto:lyc@lumenatelier.top"
+site = "https://lumenatelier.top"
+
+# Social handles (for Twitter Cards)
+[params.social]
+twitter = "lumen"
+github = "LUMENrisen"
+
+# Open Graph default image (place in static/images/)
+# ogImage = "images/og-default.png"
+
+# Site verification (optional)
+# [params.verification]
+# google = "your-google-verification-code"
+# bing = "your-bing-verification-code"
+
+# Analytics (optional)
+[params.analytics]
+#   [params.analytics.google]
+#     id = "G-XXXXXXXXXX"
+#   [params.analytics.plausible]
+#     domain = "zahi.netlify.app"
+
+
+# Disqus comments (optional)
+# [services]
+# [services.disqus]
+# shortname = 'your-disqus-shortname'
+
+# Related content
+[related]
+includeNewer = true
+threshold = 80
+toLower = true
+[[related.indices]]
+  name = "tags"
+  weight = 100
+[[related.indices]]
+  name = "series"
+  weight = 80
+[[related.indices]]
+  name = "date"
+  weight = 10
+
+# Markup settings
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    noClasses = false
+    style = "dracula"
+  [markup.tableOfContents]
+    endLevel = 4
+    startLevel = 2
+
+# Privacy (GDPR)
+[privacy]
+  [privacy.googleAnalytics]
+    anonymizeIP = true
+    respectDoNotTrack = true
+  [privacy.x]
+    enableDNT = true
+  [privacy.youtube]
+    privacyEnhanced = true

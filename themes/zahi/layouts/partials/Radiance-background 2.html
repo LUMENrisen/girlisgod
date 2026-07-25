@@ -1,0 +1,176 @@
+<!-- 动态花开背景 - 细胞绽放版 -->
+<div id="radiance-canvas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+<script>
+// 花开参数
+const radianceParams = {
+  size: Math.min(window.innerWidth, window.innerHeight), // 画布尺寸
+  speed: 0.0008,              // 演化速度
+  scale: 0.008,               // 噪声缩放
+  nSymmetries: 8,              // 对称花瓣数量
+  maxPlotterRadius: 12,        // 最大点半径
+  cycleDuration: 600,          // 一个周期帧数
+  bloomingDuration: 200        // 绽放时间（帧）
+};
+
+let colors;
+
+function initColors() {
+  colors = {};
+  
+  // 金色系：色相50-60，饱和度30-50，亮度80-100
+  const gold1 = color(50, 40, 95);   // 亮金色
+  const gold2 = color(45, 50, 85);   // 中金色
+  const gold3 = color(55, 30, 75);   // 暖金色
+  const goldBg = color(0, 0, 0, 10); // 透明黑色背景
+
+  colors.color1 = gold1;
+  colors.color2 = gold2;
+  colors.color3 = gold3;
+  colors.background = color(0, 0, 0);        // 纯黑背景
+  colors.backgroundForFadeOut = color(0, 0, 0, 10); // 极淡黑用于淡出
+}
+
+// 根据噪声值返回颜色和半径（类似原参考，但改用金色系）
+function getPlotter(value) {
+  // 调色板：背景 -> 背景 -> 背景 -> color1 -> 背景 -> 背景 -> color2 -> 背景 -> 背景 -> color3 -> ...
+  // 这样颜色之间留有间隙，让点阵有层次
+  const palette = [
+    colors.background,
+    colors.background,
+    colors.color1,
+    colors.background,
+    colors.background,
+    colors.color2,
+    colors.background,
+    colors.background,
+    colors.color3,
+    colors.background,
+    colors.background,
+    colors.color1,
+    colors.background,
+    colors.background,
+    colors.color2,
+    colors.background,
+    colors.background,
+    colors.color3,
+    colors.background,
+    colors.background,
+  ];
+
+  if (value < 0) value = 0;
+  if (value > 1) value = 1;
+  const n = palette.length;
+  const size = 1 / n;
+  let index = Math.floor(value / size);
+  if (index < 0) index = 0;
+  if (index >= n) index = n - 1;
+  
+  const valueInIntervall = (value - index * size) / size;
+  const center = 0.5;
+  const radiusScale = 2 * (center - Math.abs(valueInIntervall - center));
+  
+  return {
+    color: palette[index],
+    radius: radianceParams.maxPlotterRadius * radiusScale
+  };
+}
+
+// 淡出上一帧（用半透明背景覆盖）
+function fadeOut() {
+  // 周期性重置画布（可选）
+  if (frameCount % radianceParams.cycleDuration === 0) {
+    clear();
+    background(colors.background);
+  }
+  fill(colors.backgroundForFadeOut);
+  noStroke();
+  rect(0, 0, width, height);
+}
+
+function setup() {
+  initColors();
+  createCanvas(windowWidth, windowHeight);
+  clear();
+  background(colors.background);
+  // 固定噪声种子，使演化稳定
+  noiseSeed(1314);
+}
+
+function draw() {
+  fadeOut();
+
+  const nPlotters = 2500; // 每帧绘制的点数
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const maxDist = Math.min(width, height) * 0.45; // 最大绘制半径
+
+  for (let i = 0; i < nPlotters; i++) {
+    // 随机位置，但偏向中心（使用极坐标使分布更自然）
+    let angle = random(TWO_PI);
+    let r = random(maxDist * 0.8) + random(maxDist * 0.2); // 混合分布，让中心更密集
+    let x = centerX + cos(angle) * r;
+    let y = centerY + sin(angle) * r;
+
+    // 计算到中心的距离和方向
+    let dx = x - centerX;
+    let dy = y - centerY;
+    let distToCenter = sqrt(dx*dx + dy*dy);
+    let dirToCenter = atan2(dy, dx);
+
+    // 对称性处理：找到最近的花瓣方向
+    let nearestBranchAngle = round(dirToCenter * radianceParams.nSymmetries / TWO_PI) * TWO_PI / radianceParams.nSymmetries;
+    let angleToNearestBranch = dirToCenter - nearestBranchAngle;
+
+    // 投影距离（用于产生花瓣形状）
+    let projectedDist = distToCenter * cos(angleToNearestBranch * 0.8); // 乘以0.8使花瓣不那么锐利
+
+    // 构造噪声输入
+    let distanceLike = log(projectedDist + 1) * 0.2;
+    let angleLike = abs(sin(angleToNearestBranch * 3)) * 0.5; // 花瓣之间的渐变
+    let timeLike = frameCount * radianceParams.speed;
+
+    // 采样噪声
+    let val = noise(
+      distanceLike * 2,
+      angleLike,
+      timeLike
+    );
+
+    // 根据距离调整强度（中心强，边缘弱）
+    let intensity = 1 - (distToCenter / maxDist);
+    val = constrain(val * (0.5 + intensity * 0.5), 0, 1);
+
+    // 获取绘图仪属性
+    let plotter = getPlotter(val);
+
+    // 对靠近花瓣方向的位置加强
+    if (abs(angleToNearestBranch) < 0.15) {
+      plotter.color = lerpColor(plotter.color, colors.color3, 0.3);
+      plotter.radius *= 1.2;
+    }
+
+    // 绽放效果：随时间展开
+    let bloomProgress = (frameCount % radianceParams.cycleDuration) / radianceParams.bloomingDuration;
+    bloomProgress = constrain(bloomProgress, 0, 1);
+    let bloomRadius = maxDist * bloomProgress;
+
+    // 如果点超出当前绽放半径，透明度降低
+    if (distToCenter > bloomRadius) {
+      plotter.color.setAlpha( max(0, 100 - (distToCenter - bloomRadius) * 2) );
+    }
+
+    // 绘制
+    fill(plotter.color);
+    noStroke();
+    circle(x, y, plotter.radius);
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  radianceParams.size = Math.min(windowWidth, windowHeight);
+  background(colors.background);
+}
+</script>

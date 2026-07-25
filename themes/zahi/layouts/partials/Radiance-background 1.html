@@ -1,0 +1,149 @@
+<!-- 动态花开背景 - 光点绽放版 -->
+<div id="radiance-canvas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+<script>
+let flowers = [];
+// 金色系颜色数组
+let goldColors = [
+  '#b8860b', '#cd7f32', '#d4af37', '#f1c40f', '#e6b800', '#c5a028', '#9b7e3e'
+];
+
+function setup() {
+  let canvas = createCanvas(windowWidth, windowHeight);
+  canvas.parent('radiance-canvas-container');
+  rectMode(CENTER);
+  // 初始生成少量光点
+  for (let i = 0; i < 10; i++) {
+    addFlower();
+  }
+}
+
+function draw() {
+  background('#0a0a0a');
+  
+  for (let f of flowers) {
+    f.show();
+    f.move();
+  }
+
+  for (let i = flowers.length - 1; i >= 0; i--) {
+    if (flowers[i].isDead) {
+      flowers.splice(i, 1);
+    }
+  }
+
+  // 缓慢添加新光点
+  if (frameCount % 50 == 0 && flowers.length < 10) {
+    addFlower();
+  }
+}
+
+function easeInOutQuart(x) {
+  return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2;
+}
+
+function addFlower() {
+  let x = random(width);
+  let y = random(height);
+  // 光点大小范围
+  let maxSize = random(20, 100); // 只保留中心光点，大小适中
+  flowers.push(new Flower(x, y, maxSize));
+}
+
+class Flower {
+  constructor(x, y, maxSize) {
+    this.x = x;
+    this.y = y;
+    this.maxSize = maxSize;
+    
+    // 生长参数（只保留一个圆形）
+    this.start = 0;
+    this.target = maxSize;
+    this.current = 0;
+    
+    // 生命周期
+    this.life = 0;
+    this.growEnd = 180;      // 生长到180帧
+    this.fadeInEnd = 300;
+    this.fadeOutStart = 600;
+    this.fadeOutEnd = 1000;
+    
+    // 颜色
+    this.color = random(goldColors);
+    
+    // 极慢飘移
+    this.velX = random(-0.1, 0.1);
+    this.velY = random(-0.1, 0.1);
+    
+    this.isDead = false;
+  }
+  
+  show() {
+    push();
+    translate(this.x, this.y);
+    noStroke();
+    
+    // 计算透明度
+    let currentAlpha = 0;
+    if (this.life < this.fadeInEnd) {
+      currentAlpha = map(this.life, 0, this.fadeInEnd, 0, 120);
+    } else if (this.life < this.fadeOutStart) {
+      currentAlpha = 120;
+    } else if (this.life < this.fadeOutEnd) {
+      currentAlpha = map(this.life, this.fadeOutStart, this.fadeOutEnd, 120, 0);
+    } else {
+      currentAlpha = 0;
+    }
+    
+    if (currentAlpha < 5) {
+      pop();
+      return;
+    }
+    
+    // 绘制圆形光点
+    fill(this.color + hex(int(currentAlpha), 2));
+    circle(0, 0, this.current);
+    
+    pop();
+  }
+  
+  move() {
+    this.life++;
+    
+    // 生长动画
+    if (this.life < this.growEnd) {
+      let progress = norm(this.life, 0, this.growEnd - 1);
+      this.current = lerp(this.start, this.target, easeInOutQuart(progress));
+    } else {
+      this.current = this.target;
+    }
+    
+    // 缓慢飘移
+    this.x += this.velX;
+    this.y += this.velY;
+    
+    // 边缘处理
+    let margin = 50;
+    if (this.x + margin < 0 || this.x - margin > width ||
+        this.y + margin < 0 || this.y - margin > height) {
+      if (this.life < this.fadeOutStart) {
+        this.fadeOutStart = this.life + 20;
+        this.fadeOutEnd = this.fadeOutStart + 100;
+      }
+    }
+    
+    if (this.life > this.fadeOutEnd) {
+      this.isDead = true;
+    }
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  flowers = [];
+  for (let i = 0; i < 20; i++) {
+    addFlower();
+  }
+}
+</script>

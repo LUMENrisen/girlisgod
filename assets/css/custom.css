@@ -1,0 +1,49 @@
+/* 黑金配色 */
+:root {
+  --bg-dark: #0a0a0a;
+  --text-light: #e5e5e5;
+  --gold: #c9a959;
+  --gold-light: #d4b87a;
+  --gray-dark: #2a2a2a;
+}
+
+body {
+  background-color: var(--bg-dark) !important;
+  color: var(--text-light) !important;
+}
+
+a, .text-sage-600, .text-sage-400 {
+  color: var(--gold) !important;
+}
+a:hover {
+  color: var(--gold-light) !important;
+}
+
+.border-stone-200, .border-stone-800 {
+  border-color: var(--gray-dark) !important;
+}
+
+.bg-stone-50, .dark\:bg-stone-900 {
+  background-color: #1a1a1a !important;
+}
+
+.hover\:bg-stone-100:hover, .dark\:hover\:bg-stone-800:hover {
+  background-color: #333 !important;
+}
+
+h1, h2, h3, .text-stone-900, .dark\:text-stone-100 {
+  color: #ffffff !important;
+}
+
+.text-stone-600, .dark\:text-stone-400 {
+  color: #a3a3a3 !important;
+}
+
+html {
+  font-size: 14px; /* 基础字号从默认16px调小 */
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 15px; /* 大屏稍微大一点 */
+  }
+}

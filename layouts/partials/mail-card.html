@@ -1,0 +1,20 @@
+{{ $author := .Params.author | default .Site.Params.author | default "LUMEN" }}
+{{ $title := .Title }}
+<a href="mailto:lyc@lumenatelier.top?subject=关于《{{ $title }}》的探讨——致{{ $author }}" class="block no-underline">
+  <div class="mail-card mt-10 p-8 bg-stone-800/20 border border-stone-700/30 rounded-lg text-center max-w-2xl mx-auto hover:bg-stone-800/30 transition-colors">
+    <p class="text-stone-300 mb-2 text-base leading-relaxed">
+      如果你在阅读的过程中，有任何共鸣、疑问、甚至反驳，欢迎给我发邮件：
+    </p>
+    
+    <div class="flex justify-center mb-4">
+      <svg class="w-12 h-12 text-gold-500/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    </div>
+    
+    <p class="text-stone-300 text-base mb-3">
+      你的反馈或许会让这个思想体系<br>长得更像它本该成为的样子。
+    </p>
+  </div>
+</a>
+
