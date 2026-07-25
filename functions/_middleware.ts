@@ -1,11 +1,9 @@
-// functions/_middleware.ts
 export async function onRequest(context: { request: Request; next: () => Promise<Response> }) {
   const { request, next } = context;
 
-  // 从环境变量读取密码
+  // @ts-ignore — Cloudflare Pages 运行时 env 是真实存在的
   const PASSWORD = context.env?.SITE_PASSWORD || 'your-password-here';
 
-  // 检查 Cookie 中是否有有效的认证
   const cookie = request.headers.get('Cookie') || '';
   const isAuthenticated = cookie.includes('auth=true');
 
@@ -13,18 +11,15 @@ export async function onRequest(context: { request: Request; next: () => Promise
     return await next();
   }
 
-  // 检查是否提交了密码
   const url = new URL(request.url);
   const password = url.searchParams.get('password');
 
   if (password === PASSWORD) {
-    // 设置 Cookie，有效期 30 天
     const response = await next();
     response.headers.set('Set-Cookie', 'auth=true; Max-Age=2592000; Path=/; HttpOnly; Secure');
     return response;
   }
 
-  // 未认证：显示密码输入页面
   return new Response(
     `
     <!DOCTYPE html>
