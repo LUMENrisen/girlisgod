@@ -23,139 +23,136 @@ export async function onRequest(context: { request: Request; next: () => Promise
   return new Response(
     `
     <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>读 · 感丨女=神</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background: #F5F0E8;
-      font-family: "Noto Serif SC", serif;
-    }
-    .container {
-      background: #FBF8F0;
-      padding: 48px 40px 40px;
-      border-radius: 8px;
-      border: 1px solid #D9CEC0;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(44, 36, 22, 0.06);
-    }
-    .site-title {
-      font-family: "LXGW WenKai", serif;
-      color: #2C2416;
-      font-size: 28px;
-      font-weight: 600;
-      letter-spacing: 4px;
-      margin-bottom: 4px;
-    }
-    .site-title .slash {
-      color: #A6342B;
-      font-weight: 300;
-      margin: 0 4px;
-    }
-    .site-sub {
-      font-family: "LXGW WenKai", serif;
-      color: #7A6B5A;
-      font-size: 14px;
-      letter-spacing: 6px;
-      margin-bottom: 24px;
-    }
-    .divider {
-      width: 40px;
-      height: 2px;
-      background: #A6342B;
-      margin: 0 auto 20px;
-    }
-    .stance {
-      font-size: 13px;
-      color: #7A6B5A;
-      line-height: 1.8;
-      margin-bottom: 24px;
-      padding: 0 4px;
-    }
-    .stance em {
-      font-style: normal;
-      color: #2C2416;
-      font-weight: 600;
-    }
-    input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid #D9CEC0;
-      border-radius: 4px;
-      font-size: 15px;
-      margin-bottom: 16px;
-      box-sizing: border-box;
-      background: white;
-      color: #2C2416;
-      font-family: "Noto Serif SC", serif;
-      transition: border-color 0.2s;
-    }
-    input:focus {
-      outline: none;
-      border-color: #A6342B;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #A6342B;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      font-family: "Noto Serif SC", serif;
-      cursor: pointer;
-      transition: background 0.2s;
-      letter-spacing: 2px;
-    }
-    button:hover {
-      background: #C44536;
-    }
-    .error {
-      color: #A6342B;
-      font-size: 14px;
-      margin-top: 12px;
-    }
-    .footer-note {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #B0A89A;
-      letter-spacing: 1px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="site-title">
-      读<span class="slash">·</span>感
-    </div>
-    <div class="site-sub">女 = 神</div>
-    <div class="divider"></div>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>读 · 感丨女=神</title>
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          background: #0a0a0a;
+          font-family: "Noto Serif SC", "思源宋体", serif;
+        }
+        .container {
+          background: #1a1a1a;
+          padding: 48px 40px;
+          border-radius: 8px;
+          border: 1px solid #2a2a2a;
+          max-width: 420px;
+          width: 90%;
+          text-align: center;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+        h1 {
+          font-family: "LXGW WenKai", "华文楷体", serif;
+          color: #d4af37;
+          font-size: 28px;
+          font-weight: 400;
+          letter-spacing: 6px;
+          margin-bottom: 6px;
+        }
+        .subtitle {
+          color: #888;
+          font-size: 13px;
+          letter-spacing: 4px;
+          margin-bottom: 24px;
+          border-bottom: 1px solid #2a2a2a;
+          padding-bottom: 20px;
+        }
+        .statement {
+          color: #aaa;
+          font-size: 14px;
+          line-height: 1.8;
+          margin-bottom: 28px;
+          letter-spacing: 1px;
+        }
+        .statement span {
+          color: #d4af37;
+        }
+        input {
+          width: 100%;
+          padding: 12px 16px;
+          background: #0a0a0a;
+          border: 1px solid #333;
+          border-radius: 4px;
+          font-size: 16px;
+          color: #e5e5e5;
+          margin-bottom: 16px;
+          outline: none;
+          transition: border-color 0.3s;
+          box-sizing: border-box;
+          font-family: inherit;
+        }
+        input:focus {
+          border-color: #d4af37;
+        }
+        input::placeholder {
+          color: #555;
+        }
+        button {
+          width: 100%;
+          padding: 12px;
+          background: #d4af37;
+          color: #0a0a0a;
+          border: none;
+          border-radius: 4px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background 0.3s;
+          font-family: inherit;
+          letter-spacing: 2px;
+        }
+        button:hover {
+          background: #f1c40f;
+        }
+        .error {
+          color: #d4af37;
+          margin-top: 14px;
+          font-size: 14px;
+        }
+        .footer {
+          margin-top: 24px;
+          color: #444;
+          font-size: 11px;
+          letter-spacing: 1px;
+          border-top: 1px solid #1a1a1a;
+          padding-top: 20px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>读 · 感</h1>
+        <div class="subtitle">女 = 神</div>
 
-    <div class="stance">
-      <em>不解释，不讨好，不自证。</em><br>
-      女性存在的本身，就是神圣的。
-    </div>
+        <div class="statement">
+          故事还缺一半。<br>
+          这里在做的，只是<span>补充</span>。<br>
+          不取代，不讨伐，不站队。<br>
+          只是让被忽略的声音，<span>重新被听见</span>。
+        </div>
 
-    <form method="GET" action="">
-      <input type="password" name="password" placeholder="请输入访问密码" autofocus>
-      <button type="submit">进入档案馆</button>
-    </form>
+        <form method="GET" action="">
+          <input type="password" name="password" placeholder="请输入访问密码" autofocus>
+          <button type="submit">进 入</button>
+        </form>
 
-    ${url.searchParams.get('error') ? '<div class="error">密码错误，请重试</div>' : ''}
+        ${url.searchParams.get('error') ? '<div class="error">密码错误，请重试</div>' : ''}
 
-    <div class="footer-note">—— 用文字抵抗遗忘 · 用身体记住感受 ——</div>
-  </div>
-</body>
-</html>
+        <div class="footer">— 欢迎每一位愿意倾听的人 —</div>
+      </div>
+    </body>
+    </html>
     `,
     {
       headers: { 'Content-Type': 'text/html' },
