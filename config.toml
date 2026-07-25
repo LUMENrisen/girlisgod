@@ -1,6 +1,6 @@
 theme = "zahi"
 baseURL = "https://www.girlisgod.top/"
-title = "读 · 感丨女=神"
+title = "读 · 女丨WoMen"
 languageCode = "zh"
 defaultContentLanguage = "zh"
 
@@ -58,7 +58,7 @@ weight = 27
 
 [[menu.main]]
 identifier = "service"
-name = "支持我们"
+name = "支持读女"
 url = "/support/"
 weight = 30
 
