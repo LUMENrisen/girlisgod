@@ -51,14 +51,14 @@ weight = 25
 
 [[menu.main]]
 identifier = "projects"
-name = "作品项目"
+name = "共建项目"
 url = "/projects/"
 weight = 27
 
 
 [[menu.main]]
 identifier = "service"
-name = "支持读女"
+name = "欢迎回家"
 url = "/support/"
 weight = 30
 
