@@ -1,6 +1,6 @@
 theme = "zahi"
 baseURL = "https://www.girlisgod.top/"
-title = "读 · 女丨WoMen"
+title = "女·读丨WoMen"
 languageCode = "zh"
 defaultContentLanguage = "zh"
 
@@ -44,7 +44,7 @@ weight = 20
 
 [[menu.main]]
 identifier = "series"
-name = "思想体系"
+name = "百川书房"
 url = "/series/"
 weight = 25
 

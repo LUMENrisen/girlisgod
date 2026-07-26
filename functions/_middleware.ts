@@ -26,7 +26,7 @@ export async function onRequest(context: { request: Request; next: () => Promise
 
   const entry = isMom
     ? { title: '感 · 神', subtitle: 'MoTHer' }
-    : { title: '读 · 女', subtitle: 'WoMen' };
+    : { title: '女 · 读', subtitle: 'WoMen' };
 
   const errorHtml = url.searchParams.get('error')
     ? '<div class="error">密码错误，请重试</div>'
