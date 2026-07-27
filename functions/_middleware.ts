@@ -119,7 +119,7 @@ export async function onRequest(context: { request: Request; next: () => Promise
     </form>
     ${errorHtml}
     <div class="footer">
-      <span>光会自己找到路</span>
+      <span>——光会自己找到路——</span>
       <br>
       <span style="color:#555; font-size:12px;">rice_lab</span>
     </div>
