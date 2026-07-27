@@ -119,7 +119,7 @@ export async function onRequest(context: { request: Request; next: () => Promise
     </form>
     ${errorHtml}
     <div class="footer"><span>——光会自己找到路——</span></div>
-    <div class="footer"><span>rice_lab</span></div>
+    <div><span>rice_lab</span></div>
   </div>
   <script>
     (function() {
