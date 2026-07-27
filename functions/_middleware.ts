@@ -118,7 +118,8 @@ export async function onRequest(context: { request: Request; next: () => Promise
       <button type="submit">进入阅读</button>
     </form>
     ${errorHtml}
-    <div class="footer"><span>光会自己找到路</span></div>
+    <div class="footer"><span>——光会自己找到路——</span></div>
+    <div class="footer"><span>rice_lab</span></div>
   </div>
   <script>
     (function() {
